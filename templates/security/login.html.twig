@@ -36,15 +36,19 @@
                     </div>
                     <button role="button" type="submit" class="w-full text-white bg-cyan-900 hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Se connecter</button>
                     
-                    <div class="text-base font-medium text-gray-500 dark:text-gray-300">
+                    <div class="text-base font-medium text-gray-500 dark:text-gray-300 text-center">
                         Pas encore inscrit? <a href="{{ path('sign-in') }}" class="text-blue-700 hover:underline dark:text-blue-500">Créez votre compte</a>
                     </div>
 
                     <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
+               
+                    <p class="text-base font-medium text-center text-gray-500">ou</p>
+                    <div class="flex justify-center">
+                        <a href="{{ path('connect_google') }}" class="text-blue-700 hover:underline dark:text-blue-500">
+                            <img src="{{ asset('images/btn_google_signin_light_normal_web.png') }}" alt="logo Google">
+                        </a>
+                    </div>            
                 </form>
-            
-            </div>
         </div>
     </div>
 
