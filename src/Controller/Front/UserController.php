@@ -70,7 +70,7 @@ class UserController extends AbstractController
     {
         $form = $this->createForm(UserType::class, $user);
         $form->handleRequest($request);
-        dump($form);
+
         if ($form->isSubmitted() && $form->isValid()) {
             $userRepository->add($user, true);
 

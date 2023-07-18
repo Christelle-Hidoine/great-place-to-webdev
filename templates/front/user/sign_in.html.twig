@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Page d'inscription utilisateur{% endblock %}
+{% block title %}Inscription utilisateur{% endblock %}
 
 {% block body %}
 
@@ -19,7 +19,7 @@
                 <div class="w-3/4">
                     {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
                         {{ form_widget(form) }}
-                        <button class="flex w-full h-10 justify-center rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 mt-6">{{ button_label|default('Sauvegarder') }}</button>
+                        <button role="button" type="submit" class="w-full text-white bg-cyan-900 hover:bg-sky-600 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">{{ button_label|default('Sauvegarder') }}</button>
                     {{ form_end(form) }}
                 </div>
             </div>

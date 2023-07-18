@@ -1,4 +1,4 @@
-const show_hidePassword= {     
+const show_hidePassword = {     
     
     init: function() {
         
@@ -12,13 +12,8 @@ const show_hidePassword= {
             // toggle the icon
             this.classList.toggle("fa-eye");
         });
-        // prevent form submit
-        const form = document.querySelector("form");
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-        });
-    },
 
+    },
 }
 
 document.addEventListener("DOMContentLoaded", show_hidePassword.init);
