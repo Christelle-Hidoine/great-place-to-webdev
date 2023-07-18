@@ -18,6 +18,11 @@
             <script src ="{{ asset('js/map.js') }}"></script>
         {% endif %}
 
+        {% if route == "sign-in" or route == "user_edit" %}
+            <script src="{{ asset('js/show_hidePassword.js') }}"></script>
+        {% endif %}
+        
+
         {# sidebar filter #}
         {% set isFilterData = app.request.requestUri | urlContains ("filter_data") %}
         {% if isFilterData %}
