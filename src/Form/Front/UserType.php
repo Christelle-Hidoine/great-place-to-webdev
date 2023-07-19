@@ -22,9 +22,9 @@ class UserType extends AbstractType
         $builder
             ->add('firstname', TextType::class, ['label' => 'Prénom', "attr" => ["autocomplete" => "given-name"]])
             ->add('lastname', TextType::class, ['label' => 'Nom', "attr" => ["autocomplete" => "family-name"]])
-            ->add('username', TextType::class, ['label' => 'Pseudonyme', "attr" => ["autocomplete" => "nickname"]])
+            ->add('username', TextType::class, ['label' => 'Pseudonyme', "attr" => ["autocomplete" => "name"]])
             ->add('email', EmailType::class, [
-                "attr" => ["placeholder" => "user@newOrizon.com", "autocomplete" => "current-email"]
+                "attr" => ["placeholder" => "user@newOrizon.com", "autocomplete" => "email"]
             ])
 
             ->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
@@ -39,7 +39,8 @@ class UserType extends AbstractType
                             "label" => "Mot de passe",
                             'attr' => [
                                 'class' => 'mt-0 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-50', 
-                                "placeholder" => "••••••••"
+                                "placeholder" => "••••••••",
+                                "autocomplete" => "off",
                             ],
                             'constraints' => [
                                 new Regex(
@@ -56,7 +57,8 @@ class UserType extends AbstractType
                             "label" => "Mot de passe",
                             'attr' => [
                                 'class' => 'mt-0 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50 bg-gray-50', 
-                                "placeholder" => "••••••••"
+                                "placeholder" => "••••••••",
+                                "autocomplete" => "off",
                             ],
                             'constraints' => [
                                 new NotBlank(['message' => 'Ce champ est obligatoire']),

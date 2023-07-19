@@ -9,3 +9,97 @@ body {
 main {
     min-height: calc(100vh - 164px);
 }
+
+// homepage
+@media screen and (max-width: 340px){
+    #home_map_mobile > div {
+        margin: 0 0 0;
+    }
+    #home_map_mobile img {
+        width: 6rem;
+    }
+    #home_map_mobile .presentation {
+        margin-bottom: 0px;
+        padding: 0 0.5rem 0.5rem;
+    }
+    .presentation span {
+        text-align: center;
+    }
+    #default-carousel > div {
+        margin-top: 1rem;
+        margin-left: 0.8rem;
+        width: 92%;
+        height: 12rem;
+    }
+    #home_map_mobile .search {
+        margin : 0 0.5rem 0;
+        width: auto;
+    }
+    .search > div {
+        width: 96%;
+    }
+    .search > div > div {
+        margin: 0 0.25rem 0;
+    }
+}
+@media screen and (min-width: 370px) {
+    .presentation {
+       margin-top: 2em;
+    }
+    .presentation > span > p:nth-of-type(1) {
+        font-size: 2em;
+    }   
+    .presentation > span > p:nth-of-type(2) {
+        font-size: 1.5em;
+    }
+    .presentation > span > p:nth-of-type(3) {
+        font-size: 1em;
+    }
+    #default-carousel > div {
+       height: 18rem;
+    }
+}
+@media screen and (min-width: 700px) {
+    #home_map_mobile img {
+        width: 10rem;
+        margin: 2rem 0 0 2rem;
+    }
+    .presentation {
+       margin-top: 2em;
+    }
+    .presentation > span > p:nth-of-type(1) {
+        font-size: 2.5em;
+    }   
+    .presentation > span > p:nth-of-type(2) {
+        font-size: 2em;
+    }
+    .presentation > span > p:nth-of-type(3) {
+        font-size: 1.5em;
+    }
+    .search > div {
+        width: 20em;
+    }
+    .search > div > div {
+        margin: 0 0.25rem 0;
+    }
+    #default-carousel > div {
+       height: 18rem;
+    }
+    .search > div > div {
+        justify-content: space-evenly;
+    }
+    .search form {
+        width: 80%;
+    }
+}
+// connexion
+@media screen and (min-width: 1024px) and (max-width: 1410px){
+    .connexion {
+        font-size: 0.8rem;
+    }
+} 
+@media screen and (max-width: 380px){
+    .connexion {
+        font-size: 0.8rem;
+    }
+} 
