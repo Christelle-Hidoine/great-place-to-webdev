@@ -111,6 +111,13 @@ main {
     font-size: 1rem;
 }
 
+.link-banner a {
+    text-decoration: underline;
+}
+.link-banner span {
+    font-weight: 600;
+}
+
 .button-banner {
     margin: 1em;
 }
