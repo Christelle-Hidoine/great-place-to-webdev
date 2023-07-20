@@ -110,12 +110,13 @@ class CityType extends AbstractType
                     'Elevé' => "high",
                 ]
             ])
-            ->add('timezone', NumberType::class, [
+            ->add('timezone', IntegerType::class, [
                 "label" => "Fuseau horaire",
+                "help" => "entre -12 et 12",
                 "attr" => [
                     "placeholder" => "N° GMT",
                     'min' => -12,  
-                    'max' => 12,   
+                    'max' => 12,
                 ]
             ])
             ->add('environment', ChoiceType::class, [ 

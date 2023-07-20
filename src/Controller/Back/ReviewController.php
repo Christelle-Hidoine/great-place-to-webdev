@@ -5,23 +5,30 @@ namespace App\Controller\Back;
 use App\Entity\Review;
 use App\Form\Front\ReviewType;
 use App\Repository\ReviewRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/back/review", name="app_back_review_")
+ * 
+ * @IsGranted("ROLE_ADMIN")
  */
 class ReviewController extends AbstractController
 {
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(ReviewRepository $reviewRepository): Response
+    public function index(ReviewRepository $reviewRepository, PaginatorInterface $paginatorInterface, Request $request): Response
     {
+        $reviews = $reviewRepository->findAll();
+        $reviews = $paginatorInterface->paginate($reviews, $request->query->getInt('page', 1),5);
+        
         return $this->render('back/review/index.html.twig', [
-            'reviews' => $reviewRepository->findAll(),
+            'reviews' => $reviews,
         ]);
     }
 

@@ -5,6 +5,7 @@ namespace App\Form\Back;
 use App\Entity\City;
 use App\Entity\Country;
 use App\Entity\Image;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
@@ -27,12 +28,10 @@ class ImageType extends AbstractType
                 "expanded" => false,
                 "class" => City::class,
                 "choice_label" => "name",
-            ])
-            ->add('country', EntityType::class, [
-                "multiple" => false,
-                "expanded" => false,
-                "class" => Country::class,
-                "choice_label" => "name",
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
             ])
         ;
     }

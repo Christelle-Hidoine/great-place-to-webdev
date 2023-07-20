@@ -34,7 +34,9 @@
                         <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-sky-700 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-sky-400 dark:hover:bg-sky-500 dark:focus:ring-sky-700">Détails</button>
                     </a>
                     <a href="{{ path('app_back_user_edit', {'id': user.id}) }}">
-                        <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-rose-700 hover:bg-rose-600 focus:ring-4 focus:ring-rose-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-rose-400 dark:hover:bg-rose-500 dark:focus:ring-rose-700">Modifier</button>
+                        <button class="relative inline-flex items-center justify-center w-full p-0.5 mb-2 mr-2 overflow-hidden text-sm md:text-base font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-900 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:outline-none focus:ring-cyan-200">
+                                <span class="relative w-full px-5 py-1.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Modifier</span>
+                            </button>
                     </a>
                 </td>
             </tr>

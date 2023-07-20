@@ -1,24 +1,21 @@
 {% set isNew = (app.request.attributes.get("_route") ends with "city_new")%}
-{% set isDelete = (app.request.attributes.get("_route") ends with "city_delete")%}
 
-<div class="w-full flex justify-center ">
+<div class="w-11/12 md:w-1/3 mx-2 md:mx-auto flex flex-col justify-center">
 
     {{ form_start(form) }}
 
         {{ form_widget(form) }}
 
-            {% if isDelete %}
-
-                {{ include('back/city/_delete_form.html.twig') }}
-
-            {% endif %}
-
-        <button class="flex w-full justify-center rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 mt-6">{{ button_label|default('Sauvegarder') }}</button>
-
-        <a href="{{ path('app_back_city_index') }}">
-            <button type="button" class="my-2 flex w-full justify-center focus:outline-none text-white bg-purple-900 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Retour à la liste</button>
-        </a>
-    
+        <button class="flex w-full justify-center rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 my-6">{{ button_label|default('Sauvegarder') }}</button>
+        
     {{ form_end(form) }}
+    <div class="flex flex-col">
+        <a href="{{ path('app_back_image_new') }}">
+            <button type="button" class="w-full my-1 justify-center rounded-md focus:outline-none text-white bg-emerald-700 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-300 text-base font-medium leading-6 px-3 py-1.5 dark:bg-emerald-400 dark:hover:bg-emerald-500 dark:focus:ring-emerald-700">Ajouter une image</button>
+        </a>
+        <a href="{{ path('app_back_city_index') }}">
+            <button type="button" class="w-full my-1 justify-center focus:outline-none text-white bg-purple-900 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 text-base font-medium leading-6 rounded-md px-3 py-1.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900">Retour à la liste</button>
+        </a>
+    </div>
 
 </div>
