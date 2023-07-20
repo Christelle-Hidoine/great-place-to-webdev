@@ -2647,6 +2647,9 @@ input:checked + .toggle-bg {
 .bg-opacity-50 {
   --tw-bg-opacity: 0.5;
 }
+.bg-\[url\(\'https\:\/\/c\.pxhere\.com\/photos\/a3\/18\/airport_gate_flight_suvarnabhumi_airport_thailand_terminal-495141\.jpg\!d\'\)\] {
+  background-image: url('https://c.pxhere.com/photos/a3/18/airport_gate_flight_suvarnabhumi_airport_thailand_terminal-495141.jpg!d');
+}
 .bg-\[url\(\'https\:\/\/images\.pexels\.com\/photos\/134643\/pexels-photo-134643\.jpeg\'\)\] {
   background-image: url('https://images.pexels.com/photos/134643/pexels-photo-134643.jpeg');
 }
