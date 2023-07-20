@@ -53,18 +53,6 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v5.9.0"
     },
-    "knpuniversity/oauth2-client-bundle": {
-        "version": "2.15",
-        "recipe": {
-            "repo": "github.com/symfony/recipes-contrib",
-            "branch": "main",
-            "version": "1.20",
-            "ref": "1ff300d8c030f55c99219cc55050b97a695af3f6"
-        },
-        "files": [
-            "config/packages/knpu_oauth2_client.yaml"
-        ]
-    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -77,6 +65,18 @@
             ".env.test",
             "phpunit.xml.dist",
             "tests/bootstrap.php"
+        ]
+    },
+    "symfony/apache-pack": {
+        "version": "1.0",
+        "recipe": {
+            "repo": "github.com/symfony/recipes-contrib",
+            "branch": "main",
+            "version": "1.0",
+            "ref": "efb318193e48384eb5c5aadff15396ed698f8ffc"
+        },
+        "files": [
+            "public/.htaccess"
         ]
     },
     "sensio/framework-extra-bundle": {
