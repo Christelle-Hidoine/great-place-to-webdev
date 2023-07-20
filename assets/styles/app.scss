@@ -9,6 +9,7 @@ body {
 main {
     min-height: calc(100vh - 164px);
 }
+
 // homepage
 @media screen and (max-width: 340px){
     #home_map_mobile > div {
@@ -91,6 +92,46 @@ main {
         width: 80%;
     }
 }
+
+// cookies
+.banner {
+    border: solid 2px white;
+    background: #164E63;
+    position: fixed;
+    z-index: 100;
+    top: 3em;
+    left: 0;
+    width: 100%;
+    color: white;
+    margin: auto;
+    padding: 2em;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-size: 1rem;
+}
+
+.link-banner a {
+    text-decoration: underline;
+}
+.link-banner span {
+    font-weight: 600;
+}
+
+.button-banner {
+    margin: 1em;
+}
+
+.button-banner a{
+    border: solid 1px white;
+    padding: 0.5em 1em;
+    border-radius: 2em; 
+    background: white;
+    color: #164E63;
+    text-decoration: none;
+    font-weight: bold;
+}
+
 // connexion
 @media screen and (min-width: 1024px) and (max-width: 1410px){
     .connexion {
@@ -102,3 +143,19 @@ main {
         font-size: 0.8rem;
     }
 } 
+
+// legal-notice
+@media screen and (max-width: 340px)
+{
+    #legal-notices {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        margin: 0 0 4em 2em;
+        font-size: 0.8em;
+        text-align: justify;
+    }
+    #legal-notices > h2 {
+        font-size: 1.5em;
+    }
+}

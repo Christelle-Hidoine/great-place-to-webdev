@@ -1,0 +1,19 @@
+{% set cookie = app.request.cookies.get('accept-cookie') %}
+
+{% if not cookie %}
+
+<div class="banner">
+    <div class="text-banner">
+        <p>Ce site utilise des cookies pour une meilleure expérience en stockant des informations sur votre appareil.</p>
+        <p>En acceptant les cookies à partir de la présente page, vous êtes informés que votre consentement au dépôt de ces cookies est valable pour l’ensemble du site New O'Rizon.</p>
+
+        <div class="link-banner">
+            <small>Pour en savoir plus, veuillez lire la page <a href="{{ path('legal_notices')}}">mentions légales</a> au chapite : <span>"Données personnelles & RGPD".</span></small>
+        </div>
+    </div>
+    <div class="button-banner">
+        <a href="{{ path('accept_cookie') }}">OK, j'accepte</a>
+    </div>
+</div>
+
+{% endif %}

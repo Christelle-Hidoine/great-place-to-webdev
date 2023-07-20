@@ -7,7 +7,8 @@
             <script src="{{ asset('js/sort.js') }}"></script>
         {% endif %}
 
-        {% if route == 'cities_list' or route == 'cities_detail' or route == 'sort_asc' or route == 'sort_desc' or route == 'cities_country' or route == 'favorites' %}
+        {# back to top button #}
+        {% if route == 'cities_list' or route == 'cities_detail' or route == 'sort_asc' or route == 'sort_desc' or route == 'cities_country' or route == 'favorites' or route == 'legal_notices' %}
             <script src="{{ asset('js/scroll.js') }}"></script>
         {% endif %}
 
@@ -18,10 +19,10 @@
             <script src ="{{ asset('js/map.js') }}"></script>
         {% endif %}
 
+        {# registration and login forms #}
         {% if route == "sign-in" or route == "user_edit" or route == "app_login" %}
             <script src="{{ asset('js/show_hidePassword.js') }}"></script>
         {% endif %}
-        
 
         {# sidebar filter #}
         {% set isFilterData = app.request.requestUri | urlContains ("filter_data") %}
