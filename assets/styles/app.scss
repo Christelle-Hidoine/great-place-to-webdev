@@ -143,3 +143,19 @@ main {
         font-size: 0.8rem;
     }
 } 
+
+// legal-notice
+@media screen and (max-width: 340px)
+{
+    #legal-notices {
+        display: flex;
+        flex-direction: column;
+        width: 75%;
+        margin: 0 0 4em 2em;
+        font-size: 0.8em;
+        text-align: justify;
+    }
+    #legal-notices > h2 {
+        font-size: 1.5em;
+    }
+}
