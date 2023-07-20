@@ -29,7 +29,6 @@
     <body>
         {% set isBackOffice = (app.request.attributes.get("_route") starts with "app_back_")%}
         {% include 'partials/_nav.html.twig' with {'isBackOffice': isBackOffice}  %}
-
         {% include "partials/_flash.html.twig" %}
 
     <main>
@@ -44,6 +43,7 @@
         <button id="to-top-button" title="Go To Top" class="hidden md:hidden fixed z-40 bottom-8 right-5 border-0 w-10 h-10 drop-shadow-md bg-cyan-900 text-white text-4xl font-bold">&uarr;</button>
         {% endif %}
         
+        {% include "partials/_cookies.html.twig" %}
 
         {% include "partials/_scripts.html.twig" %}
 
