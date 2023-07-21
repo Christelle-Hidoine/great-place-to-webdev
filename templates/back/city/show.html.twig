@@ -4,96 +4,93 @@
 
 {% block body %}
 
-    <h1 class="text-3xl text-center my-8 font-bold text-cyan-900 w-full">Détails de la ville</h1>
+    <h1 class="text-3xl text-center my-8 font-bold text-cyan-900 w-full">{{ city.name }}</h1>
 
-    <div class="flex flex-col items-center">
-        <table class="table">
-            <tbody class="border-2 divide-x divide-y text-center">
-                <tr>
-                    <th>Id</th>
-                    <td>{{ city.id }}</td>
+    
+    <div class="overflow-x-auto w-5/6 md:w-2/3 lg:w-1/3 mx-auto flex flex-col">
+    <small>*Supprimer les images <span class="underline decoration-solid">avant</span> de supprimer la ville</small>
+        <table class="md:table-auto text-sm lg:text-base text-left dark:text-gray-400">
+            <tbody>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Id</th>
+                    <td class="px-5">{{ city.id }}</td>
                 </tr>
-                <tr>
-                    <th>Nom de la ville</th>
-                    <td>{{ city.name }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Ville</th>
+                    <td class="px-5">{{ city.name }}</td>
                 </tr>
-                <tr>
-                    <th>Pays</th>
-                    <td>{{ city.country.name }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Pays</th>
+                    <td class="px-5">{{ city.country.name }}</td>
                 </tr>
-                <tr>
-                    <th>Superficie en m²</th>
-                    <td>{{ city.area }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Superficie (m²)</th>
+                    <td class="px-5">{{ city.area }}</td>
                 </tr>
-                <tr>
-                    <th>Date d'ajout</th>
-                    <td>{{ city.createdAt ? city.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Qualité électrique</th>
+                    <td class="px-5">{{ city.electricity }}</td>
                 </tr>
-                <tr>
-                    <th>Date de modification</th>
-                    <td>{{ city.updatedAt ? city.updatedAt|date('Y-m-d H:i:s') : '' }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Qualité Internet</th>
+                    <td class="px-5">{{ city.internet }}</td>
                 </tr>
-                <tr>
-                    <th>Qualité du réseau électrique</th>
-                    <td>{{ city.electricity }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Taux soleil</th>
+                    <td class="px-5">{{ city.sunshineRate }}</td>
                 </tr>
-                <tr>
-                    <th>Qualité du réseau Internet</th>
-                    <td>{{ city.internet }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Température (°C)</th>
+                    <td class="px-5">{{ city.temperatureAverage }}</td>
                 </tr>
-                <tr>
-                    <th>Taux d'ensoleillement</th>
-                    <td>{{ city.sunshineRate }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Coût (€)</th>
+                    <td class="px-5">{{ city.cost }}</td>
                 </tr>
-                <tr>
-                    <th>Température moyenne en °C</th>
-                    <td>{{ city.temperatureAverage }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Langue</th>
+                    <td class="px-5">{{ city.language }}</td>
                 </tr>
-                <tr>
-                    <th>Coût de la vie en €</th>
-                    <td>{{ city.cost }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Nombre d'habitants</th>
+                    <td class="px-5">{{ city.demography }}</td>
                 </tr>
-                <tr>
-                    <th>Langue</th>
-                    <td>{{ city.language }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Niveau logement</th>
+                    <td class="px-5">{{ city.housing }}</td>
                 </tr>
-                <tr>
-                    <th>Nombre d'habitants</th>
-                    <td>{{ city.demography }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Fuseau horaire (GMT)</th>
+                    <td class="px-5">{{ city.timezone }}</td>
                 </tr>
-                <tr>
-                    <th>Niveau de logement</th>
-                    <td>{{ city.housing }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Environnement</th>
+                    <td class="px-5">{{ city.environment }}</td>
                 </tr>
-                <tr>
-                    <th>Fuseau horaire (N° GMT)</th>
-                    <td>{{ city.timezone }}</td>
-                </tr>
-                <tr>
-                    <th>Environnement</th>
-                    <td>{{ city.environment }}</td>
-                </tr>
+                <tr class="border-2 divide-x">
+                    <th class="px-5">Images Id
+                        <small class="text-xs italic font-light flex flex-wrap">*Supprimer les images cliquez sur l'id</small>
+                    </th>
                 {% for image in city.images %}
-                <tr>
-                    <th>Image Id</th>
-                    <td>{{ image.id  }}</td>
-                </tr>
+                    <td class="px-5 flex flex-col">
+                        <a href="{{ path('app_back_image_delete', {'id': image.id}) }}" class="focus:outline-none text-orange-700 hover:orange-600">{{ image.id }}</a>
+                    </td>
                 {% endfor %}
+                </tr>
             </tbody>
         </table>
     
-        <div class="flex flex-col items-center mt-4">
+        <div class="flex flex-col mt-3 text-center">
+            <a href="{{ path('app_back_city_edit', {'id': city.id}) }}">
+                <button type="button" class="w-full md:w-2/3 lg:w-1/2 my-1 rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 mt-6">Modifier</button>
+            </a>
 
             <a href="{{ path('app_back_city_index') }}">
-                <button type="button" class="my-2 flex w-full justify-center focus:outline-none text-white bg-purple-900 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900
-                ">Retour à la liste</button>
+                <button type="button" class="w-full md:w-2/3 lg:w-1/2 my-1 justify-center relative overflow-hidden inline-flex items-center border-2 border-blue-400 focus:outline-none text-gray-900 rounded-md group bg-gradient-to-br from-cyan-900 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:ring-cyan-200">
+                    <span class="relative w-full px-3 py-1.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Retour à la liste</span>
+                </button>
             </a>
-
             {{ include('back/city/_delete_form.html.twig') }}
-
-            <a href="{{ path('app_back_city_edit', {'id': city.id}) }}">
-                <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-orange-700 hover:bg-orange-600 focus:ring-4 focus:ring-orange-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-orange-400 dark:hover:bg-orange-500 dark:focus:ring-orange-700">Modifier</button>
-            </a>
         </div>
     </div>
 {% endblock %}

@@ -11,9 +11,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/back/city", name="app_back_city_")
+ * 
+ * @IsGranted("ROLE_ADMIN")
  */
 class CityController extends AbstractController
 {
@@ -22,14 +25,11 @@ class CityController extends AbstractController
      * 
      * @Route("/", name="index", methods={"GET"})
      * 
-     * @ IsGranted("ROLE_ADMIN")
      */
-    public function index(CityRepository $cityRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(CityRepository $cityRepository): Response
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
-        $cities = $paginatorInterface->paginate($cities, 
-        $request->query->getInt('page', 1),6);
-
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
+        
         return $this->render('back/city/index.html.twig', [
             'cities' => $cities,
         ]);

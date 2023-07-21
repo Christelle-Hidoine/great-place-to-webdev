@@ -3,15 +3,19 @@
 namespace App\Controller\Back;
 
 use App\Entity\Review;
-use App\Form\Front\ReviewType;
+use App\Form\Back\ReviewType;
 use App\Repository\ReviewRepository;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/back/review", name="app_back_review_")
+ * 
+ * @IsGranted("ROLE_ADMIN")
  */
 class ReviewController extends AbstractController
 {
@@ -20,8 +24,10 @@ class ReviewController extends AbstractController
      */
     public function index(ReviewRepository $reviewRepository): Response
     {
+        $reviews = $reviewRepository->findAllReviewsSortedByCityName();
+
         return $this->render('back/review/index.html.twig', [
-            'reviews' => $reviewRepository->findAll(),
+            'reviews' => $reviews,
         ]);
     }
 

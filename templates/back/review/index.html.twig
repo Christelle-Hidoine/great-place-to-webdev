@@ -4,45 +4,53 @@
 
 {% block body %}
 
-<h1 class="text-3xl text-center my-8 font-bold text-cyan-900">Liste des commentaires</h1>
-
-    <table class="table mx-auto">
-        <thead>
-            <tr class="border-2 divide-x text-center">
-                <th>Id</th>
-                <th>Nom de la ville</th>
-                <th>Pseudo</th>
-                <th>Contenu</th>
-                <th>Note</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-        {% for review in reviews %}
-            <tr class="border-2 divide-x text-center">
-                <td>{{ review.id }}</td>
-                <td>{{ review.city.name }}</td>
-                <td>{{ review.username }}</td>
-                <td>{{ review.content }}</td>
-                <td>{{ review.rating }}</td>
-                <td>
-                    <a href="{{ path('app_back_review_show', {'id': review.id}) }}">
-                        <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-sky-700 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-sky-400 dark:hover:bg-sky-500 dark:focus:ring-sky-700">Détails</button>
-                    </a>
-                    <a href="{{ path('app_back_review_edit', {'id': review.id}) }}">
-                        <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-rose-700 hover:bg-rose-600 focus:ring-4 focus:ring-rose-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-rose-400 dark:hover:bg-rose-500 dark:focus:ring-rose-700">Modifier</button>
-                    </a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">Pas d'enregistrements trouvés</td>
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
+    <h1 class="text-3xl text-center my-8 font-bold text-cyan-900">Liste des commentaires</h1>
 
     <a href="{{ path('app_back_review_new') }}">
-        <button type="button" class="my-2 mx-auto flex justify-center focus:outline-none text-white bg-emerald-700 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-emerald-400 dark:hover:bg-emerald-500 dark:focus:ring-emerald-700">Créer</button>
+        <button type="button" class="my-2 mx-auto w-24 flex justify-center focus:outline-none text-white bg-emerald-700 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-emerald-400 dark:hover:bg-emerald-500 dark:focus:ring-emerald-700">Créer</button>
     </a>
+    {# select filter by city name #}
+    <div class="w-10/12 md:w-1/3 mx-auto">
+        <input type="text" id="cityReviewFilter" class="my-2 px-3 py-2 w-full border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Filtre par nom de ville">
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="table-auto mx-3 md:mx-auto text-sm lg:text-base text-left dark:text-gray-400">
+            <thead>
+                <tr class="border-2 divide-x text-center">
+                    <th>Id</th>
+                    <th>Ville</th>
+                    <th>Pseudo</th>
+                    <th>Commentaire</th>
+                    <th>Note</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for review in reviews %}
+                <tr class="border-2 divide-x text-center city-review-row">
+                    <td>{{ review.id }}</td>
+                    <td class="city-review-name">{{ review.cityName }}</td>
+                    <td>{{ review.username }}</td>
+                    <td>{{ review.content }}</td>
+                    <td>{{ review.rating }}/5</td>
+                    <td>
+                        <a href="{{ path('app_back_review_show', {'id': review.id}) }}">
+                            <button type="button" class="my-2 w-full flex justify-center focus:outline-none text-white bg-sky-700 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300 text-sm md:text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-sky-400 dark:hover:bg-sky-500 dark:focus:ring-sky-700">Détails</button>
+                        </a>
+                        <a href="{{ path('app_back_review_edit', {'id': review.id}) }}">
+                            <button class="relative inline-flex items-center justify-center w-full p-0.5 mb-2 mr-2 overflow-hidden text-sm md:text-base font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-900 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:outline-none focus:ring-cyan-200">
+                                <span class="relative w-full px-5 py-1 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Modifier</span>
+                            </button>
+                        </a>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="5">Pas d'enregistrements trouvés</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+
 {% endblock %}

@@ -5,6 +5,7 @@ namespace App\Form\Back;
 use App\Entity\City;
 use App\Entity\Country;
 use App\Entity\Image;
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -21,10 +22,10 @@ class CityType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $environment = [
-            'mer' => 'dolorem',
-            'montagne' => 'consequuntur',
-            'ville' => 'deserunt',
-            'campagne' => 'accusantium',
+            'mer' => 'mer',
+            'montagne' => 'montagne',
+            'ville' => 'ville',
+            'campagne' => 'campagne',
         ];
 
         $builder
@@ -32,22 +33,29 @@ class CityType extends AbstractType
                 "label" => "Nom de la ville",
                 "attr" => [
                     "placeholder" => "Nom"
+                    ]
                 ]
-            ])
+            )
             ->add('country', EntityType::class, [
                 "label" => "Pays",
                 "multiple" => false,
                 "expanded" => false,
                 "class" => Country::class,
-                "choice_label" => "name",           
-            ])
+                "choice_label" => "name",
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                    },           
+                ]
+            )
             ->add('area', NumberType::class, [
-                "label" => "Superficie de la ville en m²",
+                "label" => "Superficie de la ville (km²)",
                 "scale" => 2,
                 "attr" => [
-                    "placeholder" => "Superficie en m²"
+                    "placeholder" => "12000 km²"
+                    ]
                 ]
-            ])
+            )
             ->add('electricity', ChoiceType::class,[
                 "label" => "Qualité du réseau électrique",
                 "choices" => [
@@ -55,8 +63,9 @@ class CityType extends AbstractType
                     'Bas' => "low",
                     'Moyen' => "medium",
                     'Elevé' => "high",
+                    ]
                 ]
-            ])
+            )
             ->add('internet', ChoiceType::class,[
                 "label" => "Qualité du réseau Internet",
                 "choices" => [
@@ -64,8 +73,9 @@ class CityType extends AbstractType
                     'Bas' => "low",
                     'Moyen' => "medium",
                     'Elevé' => "high",
+                    ]
                 ]
-            ])
+            )
             ->add('sunshineRate', ChoiceType::class,[
                 "label" => "Taux d'ensoleillement",
                 "choices" => [
@@ -73,8 +83,9 @@ class CityType extends AbstractType
                     'Bas' => "low",
                     'Moyen' => "medium",
                     'Elevé' => "high",
+                    ]
                 ]
-            ])
+            )
             ->add('temperatureAverage', NumberType::class, [
                 "label" => "Température moyenne en °C",
                 "scale" => 1,
@@ -82,25 +93,28 @@ class CityType extends AbstractType
                     "placeholder" => "Température moyenne en °C",
                     'min' => -50,  
                     'max' => 50,   
+                    ]
                 ]
-            ])
+            )
             ->add('cost', IntegerType::class, [
-                "label" => "Coût de la vie en €",                 
+                "label" => "Coût de la vie (€)",                 
                 "attr" => [
-                "placeholder" => "Coût de la vie en €"
+                "placeholder" => "600€"
+                    ]
                 ]
-            ])
+            )
             ->add('language', LanguageType::class, [
                 "label" => "Langue",
                 "multiple" => false,
                 "expanded" => false,
-            ])
+                ]
+            )
             ->add('demography', IntegerType::class, [
                 "label" => "Nombre d'habitants",
                 "attr" => [
                     "placeholder" => "Nombre d'habitants"
                     ]
-            ] )
+            ])
             ->add('housing', ChoiceType::class,[
                 "label" => "Niveau de logement",
                 "choices" => [
@@ -108,16 +122,19 @@ class CityType extends AbstractType
                     'Bas' => "low",
                     'Moyen' => "medium",
                     'Elevé' => "high",
+                    ]
                 ]
-            ])
-            ->add('timezone', NumberType::class, [
+            )
+            ->add('timezone', IntegerType::class, [
                 "label" => "Fuseau horaire",
+                "help" => "entre -12 et 12",
                 "attr" => [
                     "placeholder" => "N° GMT",
                     'min' => -12,  
-                    'max' => 12,   
+                    'max' => 12,
+                    ]
                 ]
-            ])
+            )
             ->add('environment', ChoiceType::class, [ 
                 "label" => "Environnement",
                 "choices" => [
@@ -125,7 +142,8 @@ class CityType extends AbstractType
                 ],
                 "expanded" => true,
                 "multiple" => false, 
-                ])
+                ]
+            )
         ;
     }
 

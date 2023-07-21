@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/back/country")
@@ -22,14 +23,11 @@ class CountryController extends AbstractController
      * 
      * @Route("/", name="app_back_country_index", methods={"GET"})
      * 
-     * @ IsGranted("ROLE_ADMIN")
+     * @IsGranted("ROLE_ADMIN")
      */
-    public function index(CountryRepository $countryRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(CountryRepository $countryRepository): Response
     {
-        $countries = $countryRepository->findAll();
-
-        $countries = $paginatorInterface->paginate($countries,
-        $request->query->getInt('page', 1),6);
+        $countries = $countryRepository->findAllSortedByName();
 
         return $this->render('back/country/index.html.twig', [
             'countries' => $countries,
