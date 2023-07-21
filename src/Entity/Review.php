@@ -35,7 +35,7 @@ class Review
 
     /**
      * @ORM\ManyToOne(targetEntity=City::class, inversedBy="reviews")
-     * @ORM\JoinColumn(nullable=false)
+     * @ORM\JoinColumn(nullable=false, onDelete="CASCADE")
      */
     private $city;
 

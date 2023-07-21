@@ -13,7 +13,7 @@
                 <a href="{{ path('cities_detail', {'id': city.cityId}) }}">
                     <div class="duration-700 ease-in-out" data-carousel-item>
                         
-                            <div class="w-full h-full absolute transition-transform duration-300 x-2 -translate-x -translate-y hover:scale-105"
+                            <div class="image-position w-full h-full absolute transition-transform duration-300 x-2 -translate-x -translate-y hover:scale-105"
                                 style="background-image:url('{{ city.imageUrl }}')"
                                 alt="Photo d'une ville au hasard">
                             </div>
@@ -49,7 +49,7 @@
                 
                     <img
                         src="{{ images.url }}"
-                        class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+                        class="image-position absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                         alt="Photo d'une ville au hasard"/>
                 
                 </div> 
