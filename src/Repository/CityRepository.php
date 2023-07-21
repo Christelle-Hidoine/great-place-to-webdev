@@ -73,7 +73,7 @@ class CityRepository extends ServiceEntityRepository
         ";
 
         if ($order !== null) {
-            $dql .= " ORDER BY c.name " . ($order === 'ASC' ? 'ASC' : 'DESC');
+            $dql .= " ORDER BY c.name " . ($order === 'DESC' ? 'DESC' : 'ASC');
         }
 
         $query = $entityManager->createQuery($dql);

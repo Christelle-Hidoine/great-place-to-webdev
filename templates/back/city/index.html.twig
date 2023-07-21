@@ -8,6 +8,11 @@
     <a href="{{ path('app_back_city_new') }}">
         <button type="button" class="my-2 mx-auto w-24 flex justify-center focus:outline-none text-white bg-emerald-700 hover:bg-emerald-600 focus:ring-4 focus:ring-emerald-300 text-base font-medium leading-6 rounded-lg px-3 py-1.5 dark:bg-emerald-400 dark:hover:bg-emerald-500 dark:focus:ring-emerald-700">Créer</button>
     </a>
+    {# select filter by city name #}
+    <div class="w-3/4 md:w-1/3 ml-2 flex justify-start">
+        <input type="text" id="cityFilter" class="my-2 px-3 py-2 w-full border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-sky-500" placeholder="Filtre par nom de ville">
+    </div>
+
     <div class="relative overflow-x-auto mx-2">
         <table class="md:table-auto text-sm lg:text-base text-left dark:text-gray-400">
             <thead>
@@ -33,9 +38,9 @@
             </thead>
             <tbody>
             {% for city in cities %}
-                <tr class="border-2 divide-x text-center">
+                <tr class="border-2 divide-x text-center city-row">
                     <td>{{ city.cityId }}</td>
-                    <td>{{ city.cityName }}</td>
+                    <td class="city-name">{{ city.cityName }}</td>
                     <td>{{ city.countryName }}</td>
                     <td>{{ city.cityArea }}</td>
                     <td>{{ city.cityElectricity }}</td>
@@ -48,7 +53,7 @@
                     <td>{{ city.cityHousing }}</td>
                     <td>{{ city.cityTimezone }}</td>
                     <td>{{ city.cityEnvironment }}</td>
-                    <td class ="align-middle text-start text-break max-w-2xs img-thumbnail"><img src="{{city.imageUrl}}"</img></td>
+                    <td class ="align-middle text-start text-break max-w-2xs img-thumbnail"><img src="{{city.imageUrl}}"></td>
                     <td>{{ city.imageId }}</td>
                     <td>
                         <a href="{{ path('app_back_city_show', {'id': city.cityId}) }}">
@@ -56,7 +61,7 @@
                         </a>
                         <a href="{{ path('app_back_city_edit', {'id': city.cityId}) }}">
                             <button class="relative inline-flex items-center justify-center w-full p-0.5 mb-2 mr-2 overflow-hidden text-sm md:text-base font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-cyan-900 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:outline-none focus:ring-cyan-200">
-                                <span class="relative w-full px-5 py-1.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Modifier</span>
+                                <span class="relative w-full px-5 py-1 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Modifier</span>
                             </button>
                         </a>
                     </td>
@@ -68,9 +73,6 @@
             {% endfor %}
             </tbody>
         </table>
-    </div>
-    <div class="navigation flex justify-center text-center mt-3">
-        {{ knp_pagination_render(cities) }}
     </div>
 
 {% endblock %}

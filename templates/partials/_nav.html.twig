@@ -17,17 +17,29 @@
             </button>
 
             <div class="hidden md:block w-full md:w-auto" id="mobile-menu">
-                <ul class="flex-col md:flex-row flex md:space-x-8 mt-4 md:mt-0 md:text-sm md:font-medium">
+                <ul class="flex-col md:flex-row flex md:space-x-1 lg:space-x-6 mt-4 md:mt-0 md:text-sm md:font-medium">
 
                 {% if isBackOffice %}
-
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_default') }}">Menu</a>
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_city_index') }}">Villes</a>
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_country_index') }}">Pays</a>
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_image_index') }}">Images</a>
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_review_index') }}">Commentaires</a>
-                    <a class="hidden md:block self-center md:text-base font-medium whitespace-nowrap text-white ml-auto" href="{{ path('app_back_user_index') }}">Utilisateurs</a>
-
+                <div class="flex self-center gap-3">
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_default') }}">Menu</a>
+                    </li>
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_city_index') }}">Villes</a>
+                    </li>
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_country_index') }}">Pays</a>
+                    </li>
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_image_index') }}">Images</a>
+                    </li>
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_review_index') }}">Commentaires</a>
+                    </li>
+                    <li>
+                        <a class="hidden md:block self-center lg:text-base font-medium whitespace-nowrap text-white ml-auto rounded-md p-1 hover:bg-sky-600 focus:ring-4 focus:ring-sky-300" href="{{ path('app_back_user_index') }}">Utilisateurs</a>
+                    </li>
+                </div>
                     
                     <li>
                         <a href="{{ path('app_back_default') }}" class="text-white hover:border-4 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-white md:p-0 md:hidden">Menu</a>
@@ -48,17 +60,18 @@
                         <a href="{{ path('app_back_user_index') }}" class="text-white hover:border-4 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-white md:p-0 md:hidden">Utilisateurs</a>
                     </li>
                     <li>
-                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 flex items-center justify-between w-full md:w-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white">
-                                
-                                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
-                            </svg>
-                        </button>
                         <!-- Dropdown menu -->
-                        <div id="dropdownNavbar" class="hidden bg-white text-base z-10 list-none divide-y divide-gray-700 rounded shadow my-4 w-44 border-gray-700">
+                        <li class="text-white hover:border-4 md:hover:border-0 md:border-0 border-b border-gray-100 md:hover:bg-transparent block md:hover:text-white md:p-0 md:rounded-md md:hover:bg-cyan-600 md:focus:ring-4 md:focus:ring-sky-300">
+                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 flex items-center justify-between w-full md:w-auto">
+                                <svg id="avatar" xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white">
+                                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+                                </svg>
+                            </button>
+                        </li>
+                        <div id="dropdownNavbar" class="hidden text-base z-10 list-none divide-y divide-gray-700 rounded shadow my-4 w-44 bg-gray-300 border-gray-700">
                             <ul class="py-1" aria-labelledby="dropdownLargeButton">
                                 <li>
-                                    <a class="text-md hover:bg-gray-100 text-gray-700 block px-4 py-2" href="{{ path('default')}}">New O'Rizon</a>
+                                    <a class="text-md text-gray-700 hover:bg-gray-100  block px-4 py-2" href="{{ path('default')}}">New O'Rizon</a>
                                 </li>
                             </ul>
                             <div class="py-1">
@@ -69,9 +82,9 @@
                 </ul>
 
                 {% else %}
-
-                    <a href="{{ path('cities_list') }}" class="hidden md:block self-center md:text-sm lg:text-xl font-semibold whitespace-nowrap text-white ml-auto">Liste des villes</a>
-
+                    <li>
+                        <a href="{{ path('cities_list') }}" class="hidden md:block self-center text-xl font-medium whitespace-nowrap text-white ml-auto rounded-md hover:bg-cyan-600 focus:ring-4 focus:ring-sky-300 px-4 py-2">Liste des villes</a>
+                    </li>
                     <li>
                         <a href="{{ path('cities_list') }}" class="text-white hover:border-4 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-white md:p-0 md:hidden">Liste des villes</a>
                     </li>
@@ -87,14 +100,15 @@
                         <a href="{{ path('legal_notices') }}" class="text-white hover:border-4 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-white md:p-0 md:hidden">Mentions Légales</a>
                     </li>
                     <li>
-                        <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 flex items-center justify-between w-full md:w-auto">
-                            <svg xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white">
-                                
-                                <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
-                            </svg>
-                        </button>
                         <!-- Dropdown menu -->
-                        <div id="dropdownNavbar" class="hidden bg-white text-base z-10 list-none divide-y divide-gray-700 rounded shadow my-4 w-44 border-gray-700">
+                        <li class="text-white hover:border-4 md:hover:border-0 md:border-0 border-b border-gray-100 md:hover:bg-transparent block md:hover:text-white md:p-0 md:rounded-md md:hover:bg-cyan-600 md:focus:ring-4 md:focus:ring-sky-300">
+                            <button id="dropdownNavbarLink" data-dropdown-toggle="dropdownNavbar" class="md:hover:bg-transparent md:border-0 pl-3 pr-4 py-2 flex items-center justify-between w-full md:w-auto">
+                                <svg id="avatar" xmlns="http://www.w3.org/2000/svg" height="2em" viewBox="0 0 448 512" fill="white">
+                                    <path d="M224 256A128 128 0 1 0 224 0a128 128 0 1 0 0 256zm-45.7 48C79.8 304 0 383.8 0 482.3C0 498.7 13.3 512 29.7 512H418.3c16.4 0 29.7-13.3 29.7-29.7C448 383.8 368.2 304 269.7 304H178.3z"/>
+                                </svg>
+                            </button>
+                        </li>
+                        <div id="dropdownNavbar" class="hidden text-base z-10 list-none divide-y divide-gray-700 rounded shadow my-4 w-44  bg-gray-300 border-gray-700">
                             <ul class="py-1" aria-labelledby="dropdownLargeButton">
                             {% if is_granted("IS_AUTHENTICATED_FULLY") %} 
                             {% set user = app.user %}

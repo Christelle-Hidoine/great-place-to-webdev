@@ -25,12 +25,9 @@ class CountryController extends AbstractController
      * 
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(CountryRepository $countryRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(CountryRepository $countryRepository): Response
     {
-        $countries = $countryRepository->findAll();
-
-        $countries = $paginatorInterface->paginate($countries,
-        $request->query->getInt('page', 1),6);
+        $countries = $countryRepository->findAllSortedByName();
 
         return $this->render('back/country/index.html.twig', [
             'countries' => $countries,

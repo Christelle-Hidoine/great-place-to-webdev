@@ -5,8 +5,8 @@
 {% block body %}
     <h1 class="text-3xl text-center my-8 font-bold text-cyan-900 w-full">Image de {{ image.city.name }}</h1>
 
-    <div class="overflow-x-auto w-5/6 mx-auto flex flex-col">
-        <table class="md:table-auto text-sm lg:text-base text-left dark:text-gray-400">
+    <div class="overflow-x-auto flex flex-col">
+        <table class="w-10/12 md:w-2/3 md:table-auto mx-auto text-sm lg:text-base text-left dark:text-gray-400">
             <tbody class="border-2 divide-x divide-y text-center">
                 <tr class="border-2 divide-x">
                     <th class="px-5">Id</th>
@@ -22,12 +22,12 @@
                 </tr>
                 <tr class="border-2 divide-x">
                     <th class="px-5">Photo</th>
-                    <td class ="align-middle img-thumbnail flex justify-center"><img src="{{ image.url }}" class="w-2/3 lg:w-3/4"></td>
+                    <td class ="w-2/3 md:w-96 align-middle img-thumbnail flex justify-center"><img src="{{ image.url }}" class="w-2/3 lg:w-3/4"></td>
                 </tr>
             </tbody>
         </table>
     
-        <div class="flex flex-col mt-3 text-center">
+        <div class="flex flex-col mt-3 text-center w-10/12 md:w-1/2 mx-auto">
             <a href="{{ path('app_back_image_edit', {'id': image.id}) }}">
                 <button type="button" class="w-full md:w-2/3 lg:w-1/2 my-1 rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 mt-6">Modifier</button>
             </a>

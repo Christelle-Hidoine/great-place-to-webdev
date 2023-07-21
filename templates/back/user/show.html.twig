@@ -4,55 +4,49 @@
 
 {% block body %}
 
-    <h1 class="text-3xl text-center my-8 font-bold text-cyan-900">Utilisateur</h1>
+    <h1 class="text-3xl text-center my-8 font-bold text-cyan-900">{{ user.firstname }} {{ user.lastname }}</h1>
 
-    <div class="flex flex-col items-center">
-        <table class="table mx-auto">
+    <div class="overflow-x-auto w-5/6 md:w-2/3 lg:w-1/3 mx-auto flex flex-col">
+        <table class="md:table-auto text-sm lg:text-base text-left dark:text-gray-400">
             <tbody>
-                <tr>
-                    <th>Id</th>
-                    <td>{{ user.id }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Id</th>
+                    <td class="px-2">{{ user.id }}</td>
                 </tr>
-                <tr>
-                    <th>Email</th>
-                    <td>{{ user.email }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Email</th>
+                    <td class="px-2">{{ user.email }}</td>
                 </tr>
-                <tr>
-                    <th>Rôles</th>
-                    <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Rôles</th>
+                    <td class="px-2">{{ user.roles ? user.roles|json_encode : '' }}</td>
                 </tr>
-                <tr>
-                    <th>Mot de passe</th>
-                    <td>{{ user.password }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Prénom</th>
+                    <td class="px-2">{{ user.firstname }}</td>
                 </tr>
-                <tr>
-                    <th>Prénom</th>
-                    <td>{{ user.firstname }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Nom</th>
+                    <td class="px-2">{{ user.lastname }}</td>
                 </tr>
-                <tr>
-                    <th>Nom</th>
-                    <td>{{ user.lastname }}</td>
-                </tr>
-                <tr>
-                    <th>Pseudo</th>
-                    <td>{{ user.username }}</td>
+                <tr class="border-2 divide-x">
+                    <th class="px-2">Pseudo</th>
+                    <td class="px-2">{{ user.username }}</td>
                 </tr>
             </tbody>
         </table>
 
-        <div class="flex flex-col items-center mt-4">
-
+        <div class="flex flex-col mt-3 text-center">
             <a href="{{ path('app_back_user_edit', {'id': user.id}) }}">
                 <button type="button" class="w-full md:w-2/3 lg:w-1/2 my-1 rounded-md bg-cyan-900 px-3 py-1.5 text-base font-medium leading-6 text-white shadow-sm hover:bg-sky-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600 mt-6">Modifier</button>
             </a>
-
-            {{ include('back/user/_delete_form.html.twig') }}
 
             <a href="{{ path('app_back_user_index') }}">
                 <button type="button" class="w-full md:w-2/3 lg:w-1/2 my-1 justify-center relative overflow-hidden inline-flex items-center border-2 border-blue-400 focus:outline-none text-gray-900 rounded-md group bg-gradient-to-br from-cyan-900 to-blue-500 group-hover:from-cyan-500 group-hover:to-blue-500 hover:text-white focus:ring-cyan-200">
                     <span class="relative w-full px-3 py-1.5 transition-all ease-in duration-75 bg-white rounded-md group-hover:bg-opacity-0">Retour à la liste</span>
                 </button>
             </a>
+            {{ include('back/user/_delete_form.html.twig') }}
 
         </div>
 

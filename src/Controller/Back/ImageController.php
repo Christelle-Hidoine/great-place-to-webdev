@@ -24,11 +24,9 @@ class ImageController extends AbstractController
      * 
      * @IsGranted("ROLE_ADMIN")
      */
-    public function index(ImageRepository $imageRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(ImageRepository $imageRepository): Response
     {
-        $images = $imageRepository->findAll();
-        $images = $paginatorInterface->paginate($images,
-        $request->query->getInt('page', 1),6);
+        $images = $imageRepository->findAllImagesSortedByCityName();
 
         return $this->render('back/image/index.html.twig', [
             'images' => $images,

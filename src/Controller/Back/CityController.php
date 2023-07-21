@@ -26,11 +26,10 @@ class CityController extends AbstractController
      * @Route("/", name="index", methods={"GET"})
      * 
      */
-    public function index(CityRepository $cityRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(CityRepository $cityRepository): Response
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
-        $cities = $paginatorInterface->paginate($cities, $request->query->getInt('page', 1),5);
-
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
+        
         return $this->render('back/city/index.html.twig', [
             'cities' => $cities,
         ]);

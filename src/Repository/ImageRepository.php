@@ -40,4 +40,14 @@ class ImageRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllImagesSortedByCityName()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id as id', 'i.url as url', 'c.name as cityName')
+            ->join('i.city', 'c')
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

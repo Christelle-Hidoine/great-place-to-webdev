@@ -3,7 +3,7 @@
 namespace App\Controller\Back;
 
 use App\Entity\Review;
-use App\Form\Front\ReviewType;
+use App\Form\Back\ReviewType;
 use App\Repository\ReviewRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,11 +22,10 @@ class ReviewController extends AbstractController
     /**
      * @Route("/", name="index", methods={"GET"})
      */
-    public function index(ReviewRepository $reviewRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(ReviewRepository $reviewRepository): Response
     {
-        $reviews = $reviewRepository->findAll();
-        $reviews = $paginatorInterface->paginate($reviews, $request->query->getInt('page', 1),5);
-        
+        $reviews = $reviewRepository->findAllReviewsSortedByCityName();
+
         return $this->render('back/review/index.html.twig', [
             'reviews' => $reviews,
         ]);
