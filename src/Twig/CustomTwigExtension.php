@@ -7,6 +7,11 @@ use Twig\TwigFilter;
 
 class CustomTwigExtension extends AbstractExtension
 {
+    /**
+     * Method to get the url
+     *
+     * @return array
+     */
     public function getFilters()
     {
         return [
