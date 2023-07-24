@@ -68,7 +68,7 @@ class CityController extends AbstractController
         $cityName = $city->getName();
         $countryName = $city->getCountry()->getName();
         $googleMap = $googleApi->fetch($cityName, $countryName);
-        
+                
         if ($city === null) {
             throw new Exception("Nous n'avons pas encore de données sur cette ville", 404);
         }

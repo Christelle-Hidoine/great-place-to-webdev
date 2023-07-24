@@ -23,7 +23,7 @@ class CityController extends AbstractController
     /**
      * Cities List
      * 
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("", name="index", methods={"GET"})
      * 
      */
     public function index(CityRepository $cityRepository): Response
