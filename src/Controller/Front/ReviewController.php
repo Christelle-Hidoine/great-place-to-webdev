@@ -20,7 +20,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 class ReviewController extends AbstractController
 {
     /**
-     * @Route("/reviews/{id}/review/add", name="app_front_review_add", requirements={"id": "\d+"})
+     * @Route("/reviews/{id}/review/add", name="app_front_review_add", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
     public function index(
         $id,

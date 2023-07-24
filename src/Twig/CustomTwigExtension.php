@@ -8,7 +8,7 @@ use Twig\TwigFilter;
 class CustomTwigExtension extends AbstractExtension
 {
     /**
-     * Method to get the url
+     * Method to get filter by url
      *
      * @return array
      */

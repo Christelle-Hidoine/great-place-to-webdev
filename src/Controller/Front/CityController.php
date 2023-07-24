@@ -26,7 +26,7 @@ class CityController extends AbstractController
         PaginatorInterface $paginatorInterface, 
         Request $request)
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
 
         $criteria = new FilterData();
         $formFilter = $this->createForm(FilterDataType::class, $criteria);
@@ -68,7 +68,7 @@ class CityController extends AbstractController
         $cityName = $city->getName();
         $countryName = $city->getCountry()->getName();
         $googleMap = $googleApi->fetch($cityName, $countryName);
-        
+                
         if ($city === null) {
             throw new Exception("Nous n'avons pas encore de données sur cette ville", 404);
         }
@@ -86,6 +86,7 @@ class CityController extends AbstractController
             "googleMap" => $googleMap
         ]);
     }
+    
 }
 
 

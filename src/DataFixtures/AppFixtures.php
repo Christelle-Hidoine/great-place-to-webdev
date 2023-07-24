@@ -126,6 +126,18 @@ class AppFixtures extends Fixture
 
         $manager->persist($user);
 
+        // Create user
+        $user = new User();
+
+        $user   ->setEmail('user1@user1.com')
+                ->setPassword('$2y$13$vdXTZhmBoGkfamUa5gC7iOCQ1lTDgyPbI6B1bXjL2C7QVzfGrwADu')
+                ->setFirstname($faker->firstName())
+                ->setLastname($faker->lastName())
+                ->setUsername($faker->userName())
+                ->setRoles(['ROLE_USER']);
+
+        $manager->persist($user);
+
         // create Reviews
         $rating = [];
         foreach ($cities as $city) {

@@ -21,7 +21,7 @@ class CountryController extends AbstractController
     /**
      * Countries list 
      * 
-     * @Route("/", name="app_back_country_index", methods={"GET"})
+     * @Route("", name="app_back_country_index", methods={"GET"})
      * 
      * @IsGranted("ROLE_ADMIN")
      */

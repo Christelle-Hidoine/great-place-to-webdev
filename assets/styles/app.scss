@@ -188,3 +188,11 @@ main {
     background-repeat: no-repeat;
 }
 
+// carousel desktop
+@media screen and (min-width: 320px) and (max-width: 500px) {
+    #default-carousel.desktop {
+        width: 80%;
+        margin: 2em 1.2em;
+    }
+}
+

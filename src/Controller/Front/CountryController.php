@@ -31,7 +31,7 @@ class CountryController extends AbstractController
     {
         $countryId = $countryRepository->find($id);
         $citiesCountry = $cityRepository->findByCountry($countryId);
-        $cities = $cityRepository->findCountryAndImageByCity();
+        $cities = $cityRepository->findCountryAndImageByCity('','country');
 
         if ($citiesCountry === null) {
             throw $this->createNotFoundException("Ce pays n'a pas de villes enregistrées pour le moment");

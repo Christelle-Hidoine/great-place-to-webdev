@@ -21,18 +21,10 @@ class GoogleApi
      */
     private $client;
 
-    /**
-     * Service de désérialisation
-     *
-     * @var SerializerInterface
-     */
-    private $serializerInterface;
-
-    public function __construct(HttpClientInterface $client, SerializerInterface $serializerInterface, string $apiKey)
+    public function __construct(HttpClientInterface $client, string $apiKey)
     {
         $this->apiKey = $apiKey;
         $this->client = $client;
-        $this->serializerInterface = $serializerInterface;
     }
 
     public function fetch(string $city, string $country)

@@ -19,7 +19,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class FavoritesController extends AbstractController
 {
     /**
-     * @Route("/favorites", name="favorites")
+     * @Route("/favorites", methods={"GET"}, name="favorites")
      */
     public function favorites(PaginatorInterface $paginatorInterface, CityRepository $cityRepository, Request $request): Response
     {
@@ -37,7 +37,7 @@ class FavoritesController extends AbstractController
     /**
      * Add city on favorites
      *
-     * @Route("/favorites/add/{id}", name="favorites_add", requirements={"id"="\d+"})
+     * @Route("/favorites/add/{id}", name="favorites_add", methods={"GET", "POST"}, requirements={"id"="\d+"})
      * 
      * @return Response
      */
@@ -107,7 +107,7 @@ class FavoritesController extends AbstractController
     /**
      * Delete all favorites
      *
-     * @Route("favorites/clear", name="favorites_clear")
+     * @Route("favorites/clear", name="favorites_clear", methods={"DELETE"})
      * @param Request
      * @return Response
      */

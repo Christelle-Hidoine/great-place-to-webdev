@@ -20,7 +20,7 @@ class ImageController extends AbstractController
     /**
      * Images list
      * 
-     * @Route("/", name="app_back_image_index", methods={"GET"})
+     * @Route("", name="app_back_image_index", methods={"GET"})
      * 
      * @IsGranted("ROLE_ADMIN")
      */
