@@ -7,15 +7,18 @@
             <script src="{{ asset('js/sort.js') }}"></script>
         {% endif %}
 
-        {% if route == 'cities_list' or route == 'cities_detail' or route == 'sort_asc' or route == 'sort_desc' or route == 'cities_country' or route == 'favorites' %}
+        {# back to top button #}
+        {% if route == 'cities_list' or route == 'cities_detail' or route == 'sort_asc' or route == 'sort_desc' or route == 'cities_country' or route == 'favorites' or route == 'legal_notices' %}
             <script src="{{ asset('js/scroll.js') }}"></script>
         {% endif %}
 
         {% if route == "cities_detail" %}
             <script src="{{ asset('js/moreCriteria.js') }}"></script>
-            {# MAP with Leaflet #}
-            <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
-            <script src ="{{ asset('js/map.js') }}"></script>
+        {% endif %}
+
+        {# registration and login forms #}
+        {% if route == "sign-in" or route == "user_edit" or route == "app_login" or route == "app_back_user_new" or route == "app_back_user_edit" %}
+            <script src="{{ asset('js/show_hidePassword.js') }}"></script>
         {% endif %}
 
         {# sidebar filter #}
@@ -37,6 +40,11 @@
             <script src="{{ asset('js/sidebar_filter_search.js')}}"></script> 
         {% endif %}
 
+        {# backoffice filter #}
+        {% if route starts with "app_back" %}
+            <script src="{{ asset('js/filter_backName.js')}}"></script> 
+        {% endif %}
+        
         {# icons scripts #}
         <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
         <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>

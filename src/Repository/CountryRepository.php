@@ -39,5 +39,15 @@ class CountryRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     } 
+
+    public function findAllSortedByName()
+    {
+        return $this->createQueryBuilder('c')
+            ->select('i.id as image_id', 'i.url as image_url', 'c.id as countryId', 'c.name as countryName', 'c.visa as countryVisa', 'c.visaIsRequired as countryVisaIsRequired', 'c.currency as countryCurrency')
+            ->leftJoin('c.image', 'i') 
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
     
 }

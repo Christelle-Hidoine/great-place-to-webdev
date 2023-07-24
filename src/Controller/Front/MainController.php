@@ -7,6 +7,8 @@ use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -27,7 +29,7 @@ class MainController extends AbstractController
         Request $request, 
         PaginatorInterface $paginator): Response
     {
-        $cities = $cityRepository->findCountryAndImageByCity('ASC');
+        $cities = $cityRepository->findCountryAndImageByCity('ASC', 'country');
 
         // sidebar filter form
         $criteria = new FilterData();
@@ -119,6 +121,22 @@ class MainController extends AbstractController
         return $this->render('front/footer/legal_notices.html.twig', [
             
         ]);
+    }
+
+    /**
+     * create cookie 
+     * 
+     * @Route("/cookie", name="accept_cookie", methods={"GET"})
+     *
+     * @return Response
+     */
+    public function cookies(): Response
+    {
+        $response = new Response();
+        $response->headers->setCookie(new Cookie('accept-cookie', 'chocolate', strtotime('+1 year')));
+        $response->sendHeaders();
+
+        return $this->redirectToRoute('default');
     }
 
 }

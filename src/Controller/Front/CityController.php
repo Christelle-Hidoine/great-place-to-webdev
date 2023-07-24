@@ -6,6 +6,7 @@ use App\Data\FilterData;
 use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\ReviewRepository;
+use App\Services\GoogleApi;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -25,7 +26,7 @@ class CityController extends AbstractController
         PaginatorInterface $paginatorInterface, 
         Request $request)
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
 
         $criteria = new FilterData();
         $formFilter = $this->createForm(FilterDataType::class, $criteria);
@@ -59,11 +60,15 @@ class CityController extends AbstractController
     public function show(
         $id, 
         CityRepository $cityRepository, 
-        ReviewRepository $reviewRepository
+        ReviewRepository $reviewRepository,
+        GoogleApi $googleApi
         ): Response
     {
         $city = $cityRepository->find($id);
-        
+        $cityName = $city->getName();
+        $countryName = $city->getCountry()->getName();
+        $googleMap = $googleApi->fetch($cityName, $countryName);
+                
         if ($city === null) {
             throw new Exception("Nous n'avons pas encore de données sur cette ville", 404);
         }
@@ -78,8 +83,10 @@ class CityController extends AbstractController
             'cityId' => $id,
             'city' => $city,
             "allReviewFromBDD" => $allReviews,
+            "googleMap" => $googleMap
         ]);
     }
+    
 }
 
 

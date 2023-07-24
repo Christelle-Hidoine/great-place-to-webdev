@@ -39,4 +39,14 @@ class ReviewRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllReviewsSortedByCityName()
+    {
+        return $this->createQueryBuilder('r')
+            ->select('r.id as id', 'r.username as username', 'r.content as content', 'r.rating as rating', 'c.name as cityName')
+            ->join('r.city', 'c')
+            ->orderBy('c.name', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

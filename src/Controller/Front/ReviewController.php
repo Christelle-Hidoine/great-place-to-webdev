@@ -12,11 +12,15 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+/**
+ * @IsGranted("ROLE_USER")
+ */
 class ReviewController extends AbstractController
 {
     /**
-     * @Route("/reviews/{id}/review/add", name="app_front_review_add", requirements={"id": "\d+"})
+     * @Route("/reviews/{id}/review/add", name="app_front_review_add", methods={"GET", "POST"}, requirements={"id": "\d+"})
      */
     public function index(
         $id,

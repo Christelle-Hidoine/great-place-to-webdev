@@ -40,4 +40,15 @@ class ImageRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllImagesForCityAndCountry()
+    {
+        return $this->createQueryBuilder('i')
+            ->select('i.id as imageId', 'i.url as url', 'c.name as cityName', 'co.name as countryName', 'cc.name as cityCountryName', 'cc.id as cityCountryId', 'c.id as cityId', 'co.id as countryId')
+            ->join('i.city', 'c')
+            ->leftJoin('i.country', 'co')
+            ->leftJoin('c.country', 'cc')
+            ->getQuery()
+            ->getResult();
+    }
+
 }

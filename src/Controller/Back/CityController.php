@@ -11,25 +11,25 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
 /**
  * @Route("/back/city", name="app_back_city_")
+ * 
+ * @IsGranted("ROLE_ADMIN")
  */
 class CityController extends AbstractController
 {
     /**
      * Cities List
      * 
-     * @Route("/", name="index", methods={"GET"})
+     * @Route("", name="index", methods={"GET"})
      * 
-     * @ IsGranted("ROLE_ADMIN")
      */
-    public function index(CityRepository $cityRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function index(CityRepository $cityRepository): Response
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
-        $cities = $paginatorInterface->paginate($cities, 
-        $request->query->getInt('page', 1),6);
-
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
+        dump($cities);
         return $this->render('back/city/index.html.twig', [
             'cities' => $cities,
         ]);
@@ -73,7 +73,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"}, requirements={"id":"\d+"})
+     * @Route("/{id}/edit", name="edit", methods={"POST", "GET"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, City $city, CityRepository $cityRepository): Response
     {
@@ -96,7 +96,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="delete", requirements={"id":"\d+"})
      */
     public function delete(Request $request, City $city, CityRepository $cityRepository): Response
     {
