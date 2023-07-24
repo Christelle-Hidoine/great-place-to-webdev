@@ -29,7 +29,7 @@ class CityController extends AbstractController
     public function index(CityRepository $cityRepository): Response
     {
         $cities = $cityRepository->findCountryAndImageByCity('cityName');
-        
+        dump($cities);
         return $this->render('back/city/index.html.twig', [
             'cities' => $cities,
         ]);
@@ -73,7 +73,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}/edit", name="edit", methods={"GET", "POST"}, requirements={"id":"\d+"})
+     * @Route("/{id}/edit", name="edit", methods={"POST", "GET"}, requirements={"id":"\d+"})
      */
     public function edit(Request $request, City $city, CityRepository $cityRepository): Response
     {
@@ -96,7 +96,7 @@ class CityController extends AbstractController
     }
 
     /**
-     * @Route("/{id}", name="delete", methods={"POST"}, requirements={"id":"\d+"})
+     * @Route("/{id}", name="delete", requirements={"id":"\d+"})
      */
     public function delete(Request $request, City $city, CityRepository $cityRepository): Response
     {

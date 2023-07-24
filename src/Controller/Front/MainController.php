@@ -29,7 +29,7 @@ class MainController extends AbstractController
         Request $request, 
         PaginatorInterface $paginator): Response
     {
-        $cities = $cityRepository->findCountryAndImageByCity('ASC');
+        $cities = $cityRepository->findCountryAndImageByCity('ASC', 'country');
 
         // sidebar filter form
         $criteria = new FilterData();

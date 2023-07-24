@@ -197,7 +197,7 @@
                             Visa requis
                         </p>
                         <p class="text-cyan-900">
-                            {{ city.country.visaIsRequired }}
+                            {{ city.country.visaIsRequired ? 'Yes' : 'No' }}
                         </p>
                     </div>
                 </div>
@@ -255,7 +255,7 @@
             </div>
 
             <div id="criteria" class="mt-5 w-fit">
-                <button id="toggle-criteria" type="button" class="w-full hover:bg-sky-600 hover:text-white text-base leading-4 font-bold py-4 px-10 text-cyan-900 bg-white border-gray-900 border-2 rounded-lg">Plus de critères</button>
+                <button id="toggle-criteria" type="button" class="w-full hover:bg-cyan-600 hover:text-white text-base leading-4 font-bold py-4 px-10 text-cyan-900 bg-white border-gray-900 border-2 rounded-lg">Plus de critères</button>
             </div>
 
         </div>

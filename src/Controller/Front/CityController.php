@@ -26,7 +26,7 @@ class CityController extends AbstractController
         PaginatorInterface $paginatorInterface, 
         Request $request)
     {
-        $cities = $cityRepository->findCountryAndImageByCity();
+        $cities = $cityRepository->findCountryAndImageByCity('cityName');
 
         $criteria = new FilterData();
         $formFilter = $this->createForm(FilterDataType::class, $criteria);

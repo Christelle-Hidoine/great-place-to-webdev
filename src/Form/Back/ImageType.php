@@ -27,7 +27,21 @@ class ImageType extends AbstractType
                 "multiple" => false,
                 "expanded" => false,
                 "class" => City::class,
+                "label" => "Ville",
                 "choice_label" => "name",
+                'placeholder' => 'Sélectionner', 'required' => true,
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')
+                        ->orderBy('c.name', 'ASC');
+                },
+            ])
+            ->add('country', EntityType::class, [
+                "multiple" => false,
+                "expanded" => false,
+                "class" => Country::class,
+                "label" => "Pays",
+                "choice_label" => "name",
+                'placeholder' => 'Sélectionner', 'required' => true,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')
                         ->orderBy('c.name', 'ASC');

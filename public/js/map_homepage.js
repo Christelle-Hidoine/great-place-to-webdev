@@ -7,7 +7,7 @@ AmCharts.makeChart("map",{
     "color": "#FFFFFF",
     "projection": "miller",
     "backgroundAlpha": 1,
-    "backgroundColor": "rgba(80,80,80,0)",
+    "backgroundColor": "rgba(255,255,255, 0.9)",
     "dataProvider": {
         "map": "worldLow",
         "getAreasFromMap": true,
@@ -1413,7 +1413,7 @@ AmCharts.makeChart("map",{
         "verticalPadding": 15
     },
     "areasSettings": {
-        "color": "rgba(25,155,170,1)",
+        "color": "rgba(25,155,170,0,5)",
         "outlineColor": "rgba(80,80,80,0)",
         "rollOverOutlineColor": "rgba(80,80,80,0)",
         "rollOverBrightness": 20,
@@ -1424,7 +1424,7 @@ AmCharts.makeChart("map",{
     },
     "imagesSettings": {
         "alpha": 1,
-        "color": "rgba(25,155,170,1)",
+        "color": "rgba(25,155,170,0,5)",
         "outlineAlpha": 0,
         "rollOverOutlineAlpha": 0,
         "outlineColor": "rgba(80,80,80,0)",

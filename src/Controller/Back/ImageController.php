@@ -26,7 +26,7 @@ class ImageController extends AbstractController
      */
     public function index(ImageRepository $imageRepository): Response
     {
-        $images = $imageRepository->findAllImagesSortedByCityName();
+        $images = $imageRepository->findAllImagesForCityAndCountry();
 
         return $this->render('back/image/index.html.twig', [
             'images' => $images,

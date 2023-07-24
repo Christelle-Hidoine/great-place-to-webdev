@@ -44,7 +44,7 @@ class CountryRepository extends ServiceEntityRepository
     {
         return $this->createQueryBuilder('c')
             ->select('i.id as image_id', 'i.url as image_url', 'c.id as countryId', 'c.name as countryName', 'c.visa as countryVisa', 'c.visaIsRequired as countryVisaIsRequired', 'c.currency as countryCurrency')
-            ->join('c.image', 'i') 
+            ->leftJoin('c.image', 'i') 
             ->orderBy('c.name', 'ASC')
             ->getQuery()
             ->getResult();
