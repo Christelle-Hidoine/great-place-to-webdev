@@ -72,7 +72,7 @@ class FavoritesController extends AbstractController
     /**
      * Remove one favorite
      * 
-     * @Route("/favorites/remove/{id}", name="favorites_remove", methods={"POST"}, requirements={"id"="\d+"})
+     * @Route("/favorites/remove/{id}", name="favorites_remove", requirements={"id"="\d+"})
      *
      * @return Response
      */
@@ -107,7 +107,7 @@ class FavoritesController extends AbstractController
     /**
      * Delete all favorites
      *
-     * @Route("favorites/clear", name="favorites_clear", methods={"POST"})
+     * @Route("favorites/clear", name="favorites_clear", methods={"DELETE"})
      * @param Request
      * @return Response
      */

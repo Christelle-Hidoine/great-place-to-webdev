@@ -40,12 +40,13 @@ class ImageRepository extends ServiceEntityRepository
         }
     }
 
-    public function findAllImagesSortedByCityName()
+    public function findAllImagesForCityAndCountry()
     {
         return $this->createQueryBuilder('i')
-            ->select('i.id as id', 'i.url as url', 'c.name as cityName')
+            ->select('i.id as imageId', 'i.url as url', 'c.name as cityName', 'co.name as countryName', 'cc.name as cityCountryName', 'cc.id as cityCountryId', 'c.id as cityId', 'co.id as countryId')
             ->join('i.city', 'c')
-            ->orderBy('c.name', 'ASC')
+            ->leftJoin('i.country', 'co')
+            ->leftJoin('c.country', 'cc')
             ->getQuery()
             ->getResult();
     }

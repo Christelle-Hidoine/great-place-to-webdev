@@ -54,7 +54,7 @@ class CityRepository extends ServiceEntityRepository
             ->getResult();
     }
 
-    public function findCountryAndImageByCity($order = null)
+    public function findCountryAndImageByCity($order = null, $group = null)
     {
         $entityManager = $this->getEntityManager();
 
@@ -69,9 +69,11 @@ class CityRepository extends ServiceEntityRepository
             WHERE img.city = c.id 
             AND img.id <= i.id) 
             = 1
-        GROUP BY co.id
         ";
 
+        if ($group !== null) {
+            $dql .= " GROUP BY " . ($group == 'country' ? 'co.id' : 'c.id');
+        }
         if ($order !== null) {
             $dql .= " ORDER BY c.name " . ($order === 'DESC' ? 'DESC' : 'ASC');
         }

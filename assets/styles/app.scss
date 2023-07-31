@@ -2,6 +2,11 @@
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
 
+$font-size-large: 2.5em;
+$font-size-medium: 2em;
+$font-size-small: 1.5em;
+$primary-color: #164E63;
+
 body {
     font-family: 'Atkinson Hyperlegible', sans-serif;
 }
@@ -11,92 +16,110 @@ main {
 }
 
 // homepage
-@media screen and (max-width: 340px){
-    #home_map_mobile > div {
-        margin: 0 0 0;
+#home_map_mobile {
+    // Mobile styles
+    @media screen and (max-width: 340px) {
+        div {
+            margin: 0;
+        }
+        img {
+            width: 6rem;
+        }
+        .presentation {
+            margin-bottom: 0px;
+            padding: 0 0.5rem 0.5rem;
+            span {
+                text-align: center;
+            }
+        }
+        #default-carousel > div {
+            margin-top: 1rem;
+            margin-left: 0.8rem;
+            width: 92%;
+            height: 12rem;
+        }
+        .search {
+            margin : 0 0.5rem 0;
+            width: auto;
+        }
+        .search {
+            div {
+                width: 96%;
+                div {
+                    margin: 0 0.25rem 0;
+                }
+            }
+        }
     }
-    #home_map_mobile img {
-        width: 6rem;
+
+    // Tablet styles
+    @media screen and (min-width: 370px) {
+        .presentation {
+            padding: 1em;
+            span {
+                p:nth-of-type(1) {
+                    font-size: $font-size-medium;
+                }
+                p:nth-of-type(2) {
+                    font-size: $font-size-medium;
+                }
+                p:nth-of-type(3) {
+                    font-size: $font-size-small;
+                }
+            }
+        }
+        #default-carousel {
+            div {
+                height: 18rem;
+            }
+        }
     }
-    #home_map_mobile .presentation {
-        margin-bottom: 0px;
-        padding: 0 0.5rem 0.5rem;
-    }
-    .presentation span {
-        text-align: center;
-    }
-    #default-carousel > div {
-        margin-top: 1rem;
-        margin-left: 0.8rem;
-        width: 92%;
-        height: 12rem;
-    }
-    #home_map_mobile .search {
-        margin : 0 0.5rem 0;
-        width: auto;
-    }
-    .search > div {
-        width: 96%;
-    }
-    .search > div > div {
-        margin: 0 0.25rem 0;
-    }
-}
-@media screen and (min-width: 370px) {
-    .presentation {
-       margin-top: 2em;
-    }
-    .presentation > span > p:nth-of-type(1) {
-        font-size: 2em;
-    }   
-    .presentation > span > p:nth-of-type(2) {
-        font-size: 1.5em;
-    }
-    .presentation > span > p:nth-of-type(3) {
-        font-size: 1em;
-    }
-    #default-carousel > div {
-       height: 18rem;
-    }
-}
-@media screen and (min-width: 700px) {
-    #home_map_mobile img {
-        width: 10rem;
-        margin: 2rem 0 0 2rem;
-    }
-    .presentation {
-       margin-top: 2em;
-    }
-    .presentation > span > p:nth-of-type(1) {
-        font-size: 2.5em;
-    }   
-    .presentation > span > p:nth-of-type(2) {
-        font-size: 2em;
-    }
-    .presentation > span > p:nth-of-type(3) {
-        font-size: 1.5em;
-    }
-    .search > div {
-        width: 20em;
-    }
-    .search > div > div {
-        margin: 0 0.25rem 0;
-    }
-    #default-carousel > div {
-       height: 18rem;
-    }
-    .search > div > div {
-        justify-content: space-evenly;
-    }
-    .search form {
-        width: 80%;
+    // Desktop styles
+    @media screen and (min-width: 700px) {
+        img {
+            width: 10rem;
+            margin: 2rem 0 0 2rem;
+        }
+        .presentation {
+            margin-top: 2em;
+            span {
+                p:nth-of-type(1) {
+                    font-size: $font-size-large;
+                }
+                p:nth-of-type(2) {
+                    font-size: $font-size-medium;
+                }
+                p:nth-of-type(3) {
+                    font-size: $font-size-small;
+                }
+            }
+        }
+        .search { 
+            div {
+                width: 20em;
+                div {
+                    margin: 0 0.25rem 0;
+                    justify-content: space-evenly;
+                }
+            }
+        }
+        #default-carousel {
+            div {
+           height: 18rem;
+            }
+        }
+        .search {
+            form {
+                width: 80%;
+            }
+        }
     }
 }
 
 // cookies
 .banner {
     border: solid 2px white;
-    background: #164E63;
+    background: $primary-color;
     position: fixed;
     z-index: 100;
     top: 3em;
@@ -127,7 +150,7 @@ main {
     padding: 0.5em 1em;
     border-radius: 2em; 
     background: white;
-    color: #164E63;
+    color: $primary-color;
     text-decoration: none;
     font-weight: bold;
 }
@@ -156,7 +179,20 @@ main {
         text-align: justify;
     }
     #legal-notices > h2 {
-        font-size: 1.5em;
+        font-size: $font-size-small;
+    }
+}
+
+.image-position {
+    background-position: center bottom;
+    background-repeat: no-repeat;
+}
+
+// carousel desktop
+@media screen and (min-width: 320px) and (max-width: 500px) {
+    #default-carousel.desktop {
+        width: 80%;
+        margin: 2em 1.2em;
     }
 }
 
