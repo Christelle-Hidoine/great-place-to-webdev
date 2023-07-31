@@ -6,6 +6,7 @@ use App\Data\FilterData;
 use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
+use App\Services\PaginationService;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -26,7 +27,7 @@ class CountryController extends AbstractController
         $id, 
         CountryRepository $countryRepository, 
         CityRepository $cityRepository, 
-        PaginatorInterface $paginator, 
+        PaginationService $paginationService, 
         Request $request): Response
     {
         $countryId = $countryRepository->find($id);
@@ -48,12 +49,12 @@ class CountryController extends AbstractController
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
             $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginator->paginate($citiesFilter, $request->query->getInt('page', 1),6);
+            $citiesFilter = $paginationService->paginate($citiesFilter);
 
             return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
         }
 
-        $citiesCountry = $paginator->paginate($citiesCountry, $request->query->getInt('page', 1),6);
+        $citiesCountry = $paginationService->paginate($citiesCountry);
 
         return $this->render("front/cities/list.html.twig",
             [

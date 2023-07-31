@@ -5,7 +5,7 @@ namespace App\Controller\Front;
 use App\Data\FilterData;
 use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
-use Knp\Component\Pager\PaginatorInterface;
+use App\Services\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -27,7 +27,7 @@ class MainController extends AbstractController
     public function home(
         CityRepository $cityRepository, 
         Request $request, 
-        PaginatorInterface $paginator): Response
+        PaginationService $paginationService): Response
     {
         $cities = $cityRepository->findCountryAndImageByCity('ASC', 'country');
 
@@ -40,7 +40,7 @@ class MainController extends AbstractController
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
 
             $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginator->paginate($citiesFilter, $request->query->getInt('page', 1),6);
+            $citiesFilter = $paginationService->paginate($citiesFilter);
 
             return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
         }
@@ -61,7 +61,7 @@ class MainController extends AbstractController
     public function search(
         CityRepository $cityRepository, 
         Request $request,
-        PaginatorInterface $paginator): Response
+        PaginationService $paginationService): Response
     {   
         $search = $request->query->get('search', '');
 
@@ -71,7 +71,7 @@ class MainController extends AbstractController
             throw $this->createNotFoundException("Cette ville n'est pas répertoriée/n'existe pas");
         }
 
-        $cities = $paginator->paginate($cities, $request->query->getInt('page', 1),6);
+        $cities = $paginationService->paginate($cities);
         
         // sidebar filter form
         $criteria = new FilterData();
@@ -82,7 +82,7 @@ class MainController extends AbstractController
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
 
             $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginator->paginate($citiesFilter, $request->query->getInt('page', 1),6);
+            $citiesFilter = $paginationService->paginate($citiesFilter);
 
             return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
         }

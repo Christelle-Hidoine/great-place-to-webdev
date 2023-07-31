@@ -29,7 +29,6 @@ class CityController extends AbstractController
     public function index(CityRepository $cityRepository): Response
     {
         $cities = $cityRepository->findCountryAndImageByCity('cityName');
-        dump($cities);
         return $this->render('back/city/index.html.twig', [
             'cities' => $cities,
         ]);

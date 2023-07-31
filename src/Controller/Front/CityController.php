@@ -7,6 +7,7 @@ use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\ReviewRepository;
 use App\Services\GoogleApi;
+use App\Services\PaginationService;
 use Exception;
 use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -23,7 +24,7 @@ class CityController extends AbstractController
      */
     public function list(
         CityRepository $cityRepository,
-        PaginatorInterface $paginatorInterface, 
+        PaginationService $paginationService, 
         Request $request)
     {
         $cities = $cityRepository->findCountryAndImageByCity('cityName');
@@ -35,7 +36,7 @@ class CityController extends AbstractController
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
             $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginatorInterface->paginate($citiesFilter, $request->query->getInt('page', 1),6);
+            $citiesFilter = $paginationService->paginate($citiesFilter);
 
             return $this->render('front/cities/list.html.twig', [
                 "citiesFilter" => $citiesFilter, 
@@ -44,7 +45,7 @@ class CityController extends AbstractController
             ]);
         }
 
-        $cities = $paginatorInterface->paginate($cities, $request->query->getInt('page', 1),6);
+        $cities = $paginationService->paginate($cities);
 
         return $this->render('front/cities/list.html.twig', [
             'cities' => $cities,
