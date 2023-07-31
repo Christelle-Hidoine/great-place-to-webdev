@@ -5,10 +5,11 @@ namespace App\Controller\Front;
 use App\Data\FilterData;
 use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
+use App\Repository\CountryRepository;
+use App\Services\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 class SortController extends AbstractController
@@ -16,11 +17,16 @@ class SortController extends AbstractController
     /**
      * @Route("/cities/asc", name="sort_asc")
      */
-    public function sortAscAction(CityRepository $cityRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function sortAscAction(
+        CityRepository $cityRepository,
+        CountryRepository $countryRepository, 
+        PaginationService $paginationService, 
+        Request $request): Response
     {
         $order = 'ASC';
-        
-        $cities = $cityRepository->findCountryAndImageByCity('ASC');
+        // country list for filter menu
+        $countries = $countryRepository->findAll();
+        $cities = $cityRepository->findCountryAndImageByCity('', $order);
 
         // sidebar filter form
         $criteria = new FilterData();
@@ -29,17 +35,22 @@ class SortController extends AbstractController
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
-            $order = 'ASC';
-            $citiesFilter = $cityRepository->findByFilter($criteria, 'ASC');
-            $citiesFilter = $paginatorInterface->paginate($citiesFilter, $request->query->getInt('page', 1),9);
+            $cities = $cityRepository->findByFilter($criteria, $order);
+            $cities = $paginationService->paginate($cities);
 
-            return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, 'sortOption' => $order, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
+            return $this->render('front/cities/list.html.twig', [
+                'sortOption' => $order, 
+                "cities" => $cities, 
+                'countries' => $countries,
+                'formFilter' => $formFilter->createView()
+            ]);
         }
 
-        $cities = $paginatorInterface->paginate($cities, $request->query->getInt('page', 1),9);
+        $cities = $paginationService->paginate($cities);
 
         return $this->render('front/cities/list.html.twig', [
             'cities' => $cities,
+            'countries' => $countries,
             'sortOption' => $order,
             'formFilter' => $formFilter->createView()
         ]);
@@ -48,11 +59,16 @@ class SortController extends AbstractController
     /**
      * @Route("/cities/desc", name="sort_desc")
      */
-    public function sortDescAction(CityRepository $cityRepository, PaginatorInterface $paginatorInterface, Request $request): Response
+    public function sortDescAction(
+        CityRepository $cityRepository, 
+        CountryRepository $countryRepository,
+        PaginationService $paginationService,
+        Request $request): Response
     {
         $order = 'DESC';
-
-        $cities = $cityRepository->findCountryAndImageByCity('DESC');
+        // country list for filter menu
+        $countries = $countryRepository->findAll();
+        $cities = $cityRepository->findCountryAndImageByCity('', $order);
 
         // sidebar filter form
         $criteria = new FilterData();
@@ -61,17 +77,22 @@ class SortController extends AbstractController
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
-            $order = 'DESC';
-            $citiesFilter = $cityRepository->findByFilter($criteria, 'DESC');
-            $citiesFilter = $paginatorInterface->paginate($citiesFilter, $request->query->getInt('page', 1),9);
+            $cities = $cityRepository->findByFilter($criteria, $order);
+            $cities = $paginationService->paginate($cities);
 
-            return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, 'sortOption' => $order, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
+            return $this->render('front/cities/list.html.twig', [
+                'sortOption' => $order,
+                "cities" => $cities, 
+                'countries' => $countries,
+                'formFilter' => $formFilter->createView()
+            ]);
         }
 
-        $cities = $paginatorInterface->paginate($cities, $request->query->getInt('page', 1), 9);
+        $cities = $paginationService->paginate($cities);
     
         return $this->render('front/cities/list.html.twig', [
             'cities' => $cities,
+            'countries' => $countries,
             'sortOption' => $order,
             'formFilter' => $formFilter->createView()
         ]);

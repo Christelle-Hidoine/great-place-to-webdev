@@ -18,25 +18,25 @@ class FilterDataType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $visas = [
-            'Visa touriste' => 'voluptatem',
-            'Visa nomade' => 'temporibus',
-            'Virtual Working Program'=> 'suscipit',
-            'Spécial Tourist Visa' => 'sed',
-            'Welcome Stamp' => 'saepe',
-            'Residencia Temporal Empleados Especializados por cuenta propia' => 'rerum',
-            'Work From Bermuda' => 'quod',
-            'Long-term visa for remote workers and family' => 'qui',
-            'e-Visa' => 'necessitatibus',
-            'Antigua Nomad Digital Residence' => 'maxime',
-            'Global Citizen Concierge' => 'ipsum',
-            'visa Premium' => 'doloremque',
+            'Visa touriste' => 'Visa touriste',
+            'Visa nomade' => 'Visa nomade',
+            'Virtual Working Program'=> 'Virtual Working Program',
+            'Spécial Tourist Visa' => 'Spécial Tourist Visa',
+            'Welcome Stamp' => 'Welcome Stamp',
+            'Residencia Temporal Empleados Especializados por cuenta propia' => 'Residencia Temporal Empleados Especializados por cuenta propia',
+            'Work From Bermuda' => 'Work From Bermuda',
+            'Long-term visa for remote workers and family' => 'Long-term visa for remote workers and family',
+            'e-Visa' => 'e-Visa',
+            'Antigua Nomad Digital Residence' => 'Antigua Nomad Digital Residence',
+            'Global Citizen Concierge' => 'Global Citizen Concierge',
+            'visa Premium' => 'visa Premium',
         ];
 
         $environment = [
-            'mer' => 'corrupti',
-            'montagne' => 'consequatur',
-            'ville' => 'dolorem',
-            'campagne' => 'accusantium',
+            'mer' => 'mer',
+            'montagne' => 'montagne',
+            'ville' => 'ville',
+            'campagne' => 'campagne',
         ];
 
         $builder

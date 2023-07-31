@@ -44,17 +44,34 @@ class CityRepository extends ServiceEntityRepository
         }
     }
 
-    public function findByCountry($id)
+    public function findByCountry($id, $order = null, $group = null)
     {
-        return $this->createQueryBuilder('c')
+        $qb = $this->createQueryBuilder('c');
+        $qb->select('c.id AS cityId, i.id AS imageId, i.url AS imageUrl, c.name AS cityName, c.rating AS cityRating, c.area AS cityArea, c.electricity AS cityElectricity, c.internet AS cityInternet, c.sunshineRate AS citySunshineRate, c.temperatureAverage AS cityTemperatureAverage, c.cost AS cityCost, c.language AS cityLanguage, c.demography AS cityDemography, c.housing AS cityHousing, c.timezone AS cityTimezone, c.environment AS cityEnvironment, co.name AS countryName, co.id AS countryId')
             ->innerJoin('c.country', 'co', 'WITH', 'co.id = :country_id')
             ->innerJoin('c.images', 'i')
             ->setParameter('country_id', $id)
-            ->getQuery()
-            ->getResult();
+            ->andWhere($qb->expr()->eq(
+                '(SELECT COUNT(img.id) 
+                    FROM App\Entity\Image img 
+                    WHERE img.city = c.id 
+                    AND img.id <= i.id)',
+                1
+            ));
+            
+
+        if ($group !== null) {
+            $qb->addGroupBy($group == 'country' ? 'co.id' : 'c.id');
+        }
+
+        if ($order !== null) {
+            $qb->orderBy('c.name', $order === 'DESC' ? 'DESC' : 'ASC');
+        }
+
+        return $qb->getQuery()->getResult();
     }
 
-    public function findCountryAndImageByCity($order = null, $group = null)
+    public function findCountryAndImageByCity($group = null, $order = null)
     {
         $entityManager = $this->getEntityManager();
 
@@ -81,30 +98,25 @@ class CityRepository extends ServiceEntityRepository
         $query = $entityManager->createQuery($dql);
         $sortedCities = $query->getResult();
 
-        $sortedCities = $query->getResult();
-
         return $sortedCities;
     }
 
     public function findByCityName($search)
     {
-        $entityManager = $this->getEntityManager();
-        $queryBuilder = $entityManager->createQueryBuilder();
-
+        $queryBuilder = $this->createQueryBuilder('c');
         $queryBuilder->select('c.id AS cityId, c.name AS cityName, c.rating AS cityRating, co.id AS countryId, co.name AS countryName, i.id AS imageId, i.url AS imageUrl')
-            ->from(City::class, 'c')
-            ->where($queryBuilder->expr()->like('c.name', ':name'))
-            ->innerJoin('c.country', 'co')
-            ->innerJoin('c.images', 'i')
-            ->andWhere($queryBuilder->expr()->eq(
-                '(SELECT COUNT(img.id) 
-                    FROM App\Entity\Image img 
-                    WHERE img.city = c.id 
-                    AND img.id <= i.id)',
-                1
-            ))
-            ->orderBy('c.name', 'ASC')
-            ->setParameter('name', "$search%");
+                    ->where($queryBuilder->expr()->like('c.name', ':name'))
+                    ->innerJoin('c.country', 'co')
+                    ->innerJoin('c.images', 'i')
+                    ->andWhere($queryBuilder->expr()->eq(
+                        '(SELECT COUNT(img.id) 
+                            FROM App\Entity\Image img 
+                            WHERE img.city = c.id 
+                            AND img.id <= i.id)',
+                        1
+                    ))
+                    ->orderBy('c.name', 'ASC')
+                    ->setParameter('name', "$search%");
 
         return $queryBuilder->getQuery()->getResult();
     }
@@ -117,115 +129,123 @@ class CityRepository extends ServiceEntityRepository
      */
     public function findByFilter(FilterData $filterData, $order = null)
     {
-        $query = $this->createQueryBuilder('city')
-            ->select('city', 'c')
-            ->join('city.country', 'c');
+        $query = $this->createQueryBuilder('c');
+        $query->select('c.id AS cityId, i.id AS imageId, i.url AS imageUrl, c.name AS cityName, c.rating AS cityRating, c.area AS cityArea, c.electricity AS cityElectricity, c.internet AS cityInternet, c.sunshineRate AS citySunshineRate, c.temperatureAverage AS cityTemperatureAverage, c.cost AS cityCost, c.language AS cityLanguage, c.demography AS cityDemography, c.housing AS cityHousing, c.timezone AS cityTimezone, c.environment AS cityEnvironment, co.name AS countryName, co.id AS countryId')
+            ->join('c.country', 'co')
+            ->innerJoin('c.images', 'i')
+            ->andWhere($query->expr()->eq(
+                '(SELECT COUNT(img.id) 
+                    FROM App\Entity\Image img 
+                    WHERE img.city = c.id 
+                    AND img.id <= i.id)',
+                1
+            ));
 
             // electricity
             if (!empty($filterData->electricityLevel)) {
                 $query = $query
-                    ->andWhere('city.electricity LIKE :filterData')
+                    ->andWhere('c.electricity LIKE :filterData')
                     ->setParameter("filterData", "%$filterData->electricityLevel%");
             }
             // internet
             if (!empty($filterData->internetLevel)) {
                 $query = $query
-                    ->andWhere('city.internet LIKE :filterData')
+                    ->andWhere('c.internet LIKE :filterData')
                     ->setParameter("filterData", "%$filterData->internetLevel%");
             }
             // sunshine
             if (!empty($filterData->sunshineLevel)) {
                 $query = $query
-                    ->andWhere('city.sunshineRate LIKE :filterData')
+                    ->andWhere('c.sunshineRate LIKE :filterData')
                     ->setParameter("filterData", "%$filterData->sunshineLevel%");
             }
             // housing
             if (!empty($filterData->housingLevel)) {
                 $query = $query
-                    ->andWhere('city.housing LIKE :filterData')
+                    ->andWhere('c.housing LIKE :filterData')
                     ->setParameter("filterData", "%$filterData->housingLevel%");
             }
             // temperature
             if (!empty($filterData->temperatureMin)) {
                 $query = $query
-                    ->andWhere('city.temperatureAverage >= :temperatureMin')
+                    ->andWhere('c.temperatureAverage >= :temperatureMin')
                     ->setParameter('temperatureMin', $filterData->temperatureMin);
             }
             if (!empty($filterData->temperatureMax)) {
                 $query = $query
-                    ->andWhere('city.temperatureAverage <= :temperatureMax')
+                    ->andWhere('c.temperatureAverage <= :temperatureMax')
                     ->setParameter('temperatureMax', $filterData->temperatureMax);
             }
             // demography
             if (!empty($filterData->demographyMin)) {
                 $query = $query
-                    ->andWhere('city.demography >= :demographyMin')
+                    ->andWhere('c.demography >= :demographyMin')
                     ->setParameter('demographyMin', $filterData->demographyMin);
             }
             if (!empty($filterData->demographyMax)) {
                 $query = $query
-                    ->andWhere('city.demography <= :demographyMax')
+                    ->andWhere('c.demography <= :demographyMax')
                     ->setParameter('demographyMax', $filterData->demographyMax);
             }
             // cost
             if (!empty($filterData->costMin)) {
                 $query = $query
-                    ->andWhere('city.cost >= :costMin')
+                    ->andWhere('c.cost >= :costMin')
                     ->setParameter('costMin', $filterData->costMin);
             }
             if (!empty($filterData->costMax)) {
                 $query = $query
-                    ->andWhere('city.cost <= :costMax')
+                    ->andWhere('c.cost <= :costMax')
                     ->setParameter('costMax', $filterData->costMax);
             }
             // area
             if (!empty($filterData->areaMin)) {
                 $query = $query
-                    ->andWhere('city.area >= :areaMin')
+                    ->andWhere('c.area >= :areaMin')
                     ->setParameter('areaMin', $filterData->areaMin);
             }
             if (!empty($filterData->areaMax)) {
                 $query = $query
-                    ->andWhere('city.area >= :areaMax')
+                    ->andWhere('c.area >= :areaMax')
                     ->setParameter('areaMax', $filterData->areaMax);
             }
             // timezone
             if (!empty($filterData->timezone)) {
                 $query = $query
-                    ->andWhere('city.timezone = :timezone')
+                    ->andWhere('c.timezone = :timezone')
                     ->setParameter('timezone', $filterData->timezone);
             }
             // currency
             if (!empty($filterData->currencyType)) {
                 $query = $query
-                    ->andWhere('c.currency = :currencyType')
+                    ->andWhere('co.currency = :currencyType')
                     ->setParameter('currencyType', $filterData->currencyType);
             }
             // visa
             if (!empty($filterData->visaRequired)) {
                 $query = $query
-                    ->andWhere('c.visaIsRequired = 1');
+                    ->andWhere('co.visaIsRequired = 1');
             }
             if (!empty($filterData->visaType)) {
                 $query = $query
-                    ->andWhere('c.visa = :visaType')
+                    ->andWhere('co.visa = :visaType')
                     ->setParameter('visaType', $filterData->visaType);
             }
             // language
             if (!empty($filterData->language)) {
                 $query = $query
-                    ->andWhere('city.language = :language')
+                    ->andWhere('c.language = :language')
                     ->setParameter('language', $filterData->language);  
             }
             // environment
             if (!empty($filterData->environment)) {
                 $query = $query
-                    ->andWhere('city.environment = :environment')
+                    ->andWhere('c.environment = :environment')
                     ->setParameter('environment', $filterData->environment);  
             }
 
             if ($order !== null) {
-                $query = $query->orderBy("city.name", $order);
+                $query = $query->orderBy("c.name", $order);
             }
 
         return $query->getQuery()->getResult();  

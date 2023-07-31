@@ -7,7 +7,6 @@ use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
 use App\Services\PaginationService;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -25,16 +24,18 @@ class CountryController extends AbstractController
      */
     public function countryShow(
         $id, 
-        CountryRepository $countryRepository, 
-        CityRepository $cityRepository, 
-        PaginationService $paginationService, 
+        CountryRepository $countryRepository,
+        CityRepository $cityRepository,
+        PaginationService $paginationService,
         Request $request): Response
     {
-        $countryId = $countryRepository->find($id);
-        $citiesCountry = $cityRepository->findByCountry($countryId);
-        $cities = $cityRepository->findCountryAndImageByCity('','country');
+        // country list in filter menu
+        $countries = $countryRepository->findAll();
 
-        if ($citiesCountry === null) {
+        $countryId = $countryRepository->find($id);
+        $cities = $cityRepository->findByCountry($countryId);
+
+        if ($cities === null) {
             throw $this->createNotFoundException("Ce pays n'a pas de villes enregistrées pour le moment");
         }
         if ($countryId === null) {
@@ -48,18 +49,21 @@ class CountryController extends AbstractController
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
-            $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginationService->paginate($citiesFilter);
+            $cities = $cityRepository->findByFilter($criteria);
+            $cities = $paginationService->paginate($cities);
 
-            return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
+            return $this->render('front/cities/list.html.twig', [
+                "cities" => $cities, 
+                'countries' => $countries, 
+                'formFilter' => $formFilter->createView(),
+            ]);
         }
 
-        $citiesCountry = $paginationService->paginate($citiesCountry);
-
-        return $this->render("front/cities/list.html.twig",
-            [
-               'citiesCountry' => $citiesCountry,
+        $cities = $paginationService->paginate($cities);
+        
+        return $this->render("front/cities/list.html.twig", [
                'cities' => $cities,
+               'countries' => $countries,
                'formFilter' => $formFilter->createView(),
             ]
         );

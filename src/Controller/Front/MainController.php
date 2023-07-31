@@ -5,9 +5,9 @@ namespace App\Controller\Front;
 use App\Data\FilterData;
 use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
+use App\Repository\CountryRepository;
 use App\Services\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpClient\HttpClient;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -26,9 +26,12 @@ class MainController extends AbstractController
      */
     public function home(
         CityRepository $cityRepository, 
+        CountryRepository $countryRepository,
         Request $request, 
         PaginationService $paginationService): Response
     {
+        // country list in filter menu
+        $countries = $countryRepository->findAll();
         $cities = $cityRepository->findCountryAndImageByCity('ASC', 'country');
 
         // sidebar filter form
@@ -39,15 +42,20 @@ class MainController extends AbstractController
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
 
-            $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginationService->paginate($citiesFilter);
+            $cities = $cityRepository->findByFilter($criteria);
+            $cities = $paginationService->paginate($cities);
 
-            return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
+            return $this->render('front/cities/list.html.twig', [
+                "countries" => $countries, 
+                "cities" => $cities, 
+                'formFilter' => $formFilter->createView(),
+            ]);
         }
 
         return $this->render('front/main/index.html.twig', [
             'formFilter' => $formFilter->createView(),
             'cities' => $cities,
+            'countries' => $countries
         ]);
     }
 
@@ -60,9 +68,12 @@ class MainController extends AbstractController
      */
     public function search(
         CityRepository $cityRepository, 
+        CountryRepository $countryRepository,
         Request $request,
         PaginationService $paginationService): Response
     {   
+        // country list in filter menu
+        $countries = $countryRepository->findAll();
         $search = $request->query->get('search', '');
 
         $cities = $cityRepository->findByCityName($search);
@@ -81,15 +92,20 @@ class MainController extends AbstractController
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
 
-            $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginationService->paginate($citiesFilter);
+            $cities = $cityRepository->findByFilter($criteria);
+            $cities = $paginationService->paginate($cities);
 
-            return $this->render('front/cities/list.html.twig', ["citiesFilter" => $citiesFilter, "cities" => $cities, 'formFilter' => $formFilter->createView(),]);
+            return $this->render('front/cities/list.html.twig', [
+                "cities" => $cities, 
+                'countries' => $countries, 
+                'formFilter' => $formFilter->createView()
+            ]);
         }
 
         return $this->render('front/cities/list.html.twig', [
             'formFilter' => $formFilter->createView(),
             'cities' => $cities,
+            'countries' => $countries,
         ]);
     }
 

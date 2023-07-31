@@ -33,14 +33,6 @@ services:
         arguments:
             $apiKey: '%env(string:GOOGLE_API_KEY)%'
 
-    # filter menu service
-    App\Services\FilterMenuService:
-        arguments:
-            $cityRepository: '@App\Repository\CityRepository'
-            $paginator: '@knp_paginator'
-            $formFactory: '@form.factory'
-            $requestStack: '@request_stack'
-
     # pagination 
     App\Services\PaginationService:
         arguments:
