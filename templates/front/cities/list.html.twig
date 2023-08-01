@@ -5,32 +5,20 @@
 {% block body %}
 
 {% set route = app.request.attributes.get("_route") %}
-{% set isAsc = app.request.requestUri starts with ('/cities/asc') %}
-{% set isDesc = app.request.requestUri starts with ('/cities/desc') %}
-{% if route == "cities_list" or isAsc or isDesc %}
+
     {% include 'partials/_sort.html.twig' %}
-{% endif %}
 
-{% include 'partials/_filter_button.html.twig'%}
-
-{% set isSorted = (app.request.attributes.get("_route") ends with "sort_asc")%}
+    {% include 'partials/_filter_button.html.twig'%}
 
         <div class="flex w-full justify-center">
             <div class="w-screen md:grid md:grid-cols-3 md:justify-center md:items-center my-4 mx-4 lg:mx-10 p-4 gap-x-2 gap-y-4">
             
                 {% for city in cities %}
 
-                    {% if isSorted %}
-
                         {% include 'partials/_cities_list.html.twig' %}
-
-                    {% else %}
-
-                        {% include 'partials/_cities_list.html.twig' %}
-
-                    {% endif %}
 
                 {% else %}
+                
                     <div>
                         <div>
                             <em><p><span class="ps-1">Nous n'avons pas trouvé de ville correspondant à votre recherche. Tentez à nouveau votre chance !<p></span></em>
@@ -40,7 +28,6 @@
                 {% endfor %}
  
             </div>
-
         </div>
 
         <div class="z-50 pagination flex justify-center mb-5">
