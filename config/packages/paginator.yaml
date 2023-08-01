@@ -9,5 +9,5 @@ knp_paginator:
         filter_value_name: filterValue  # filter value query parameter name
     template:
         pagination: '@KnpPaginator/Pagination/tailwindcss_pagination.html.twig'     # sliding pagination controls template
-        sortable: '@KnpPaginator/Pagination/tailwindcss_sortable_link.html.twig' # sort link template
+        sortable: '@KnpPaginator/Pagination/sortable_link.html.twig' # sort link template
         filtration: '@KnpPaginator/Pagination/tailwindcss_filtration.html.twig'  # filters template
