@@ -2,15 +2,13 @@
 
 namespace App\Controller\Front;
 
-use App\Data\FilterData;
-use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
+use App\Services\FilterMenuService;
 use App\Services\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\HttpFoundation\Request;
 
 class SortController extends AbstractController
 {
@@ -20,22 +18,20 @@ class SortController extends AbstractController
     public function sortAscAction(
         CityRepository $cityRepository,
         CountryRepository $countryRepository, 
-        PaginationService $paginationService, 
-        Request $request): Response
+        PaginationService $paginationService,
+        FilterMenuService $filterMenuService): Response
     {
         $order = 'ASC';
         // country list for filter menu
         $countries = $countryRepository->findAll();
         $cities = $cityRepository->findCountryAndImageByCity('', $order);
 
-        // sidebar filter form
-        $criteria = new FilterData();
-        $formFilter = $this->createForm(FilterDataType::class, $criteria);
-        $formFilter->handleRequest($request);
+        // sidebar filter menu
+        $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
-            $cities = $cityRepository->findByFilter($criteria, $order);
+            $cities = $cityRepository->findByFilter($filterMenuService->getCriteria(), $order);
             $cities = $paginationService->paginate($cities);
 
             return $this->render('front/cities/list.html.twig', [
@@ -63,21 +59,19 @@ class SortController extends AbstractController
         CityRepository $cityRepository, 
         CountryRepository $countryRepository,
         PaginationService $paginationService,
-        Request $request): Response
+        FilterMenuService $filterMenuService): Response
     {
         $order = 'DESC';
         // country list for filter menu
         $countries = $countryRepository->findAll();
         $cities = $cityRepository->findCountryAndImageByCity('', $order);
 
-        // sidebar filter form
-        $criteria = new FilterData();
-        $formFilter = $this->createForm(FilterDataType::class, $criteria);
-        $formFilter->handleRequest($request);
+        // sidebar filter menu
+        $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
         if ($formFilter->isSubmitted() && $formFilter->isValid()) {
             
-            $cities = $cityRepository->findByFilter($criteria, $order);
+            $cities = $cityRepository->findByFilter($filterMenuService->getCriteria(), $order);
             $cities = $paginationService->paginate($cities);
 
             return $this->render('front/cities/list.html.twig', [

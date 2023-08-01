@@ -2,10 +2,9 @@
 
 namespace App\Controller\Front;
 
-use App\Data\FilterData;
-use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
+use App\Services\FilterMenuService;
 use App\Services\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Cookie;
@@ -27,27 +26,22 @@ class MainController extends AbstractController
     public function home(
         CityRepository $cityRepository, 
         CountryRepository $countryRepository,
-        Request $request, 
-        PaginationService $paginationService): Response
+        FilterMenuService $filterMenuService): Response
     {
         // country list in filter menu
         $countries = $countryRepository->findAll();
         $cities = $cityRepository->findCountryAndImageByCity('ASC', 'country');
 
-        // sidebar filter form
-        $criteria = new FilterData();
-        $formFilter = $this->createForm(FilterDataType::class, $criteria);
-        $formFilter->handleRequest($request);
-        
+        // sidebar filter menu
+        $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
+        $filteredData = $filterMenuService->getFilteredCities($cities);
+        $citiesFiltered = $filteredData['cities'];
 
-            $cities = $cityRepository->findByFilter($criteria);
-            $cities = $paginationService->paginate($cities);
-
+        if ($formFilter !== null && $citiesFiltered !== null) {
             return $this->render('front/cities/list.html.twig', [
-                "countries" => $countries, 
-                "cities" => $cities, 
+                "cities" => $citiesFiltered,
+                'countries' => $countries,
                 'formFilter' => $formFilter->createView(),
             ]);
         }
@@ -70,6 +64,7 @@ class MainController extends AbstractController
         CityRepository $cityRepository, 
         CountryRepository $countryRepository,
         Request $request,
+        FilterMenuService $filterMenuService,
         PaginationService $paginationService): Response
     {   
         // country list in filter menu
@@ -81,26 +76,22 @@ class MainController extends AbstractController
         if ($cities === []) {
             throw $this->createNotFoundException("Cette ville n'est pas répertoriée/n'existe pas");
         }
-
-        $cities = $paginationService->paginate($cities);
         
-        // sidebar filter form
-        $criteria = new FilterData();
-        $formFilter = $this->createForm(FilterDataType::class, $criteria);
-        $formFilter->handleRequest($request);
-        
+        // sidebar filter menu
+        $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
+        $filteredData = $filterMenuService->getFilteredCities($cities);
+        $citiesFiltered = $filteredData['cities'];
 
-            $cities = $cityRepository->findByFilter($criteria);
-            $cities = $paginationService->paginate($cities);
-
+        if ($formFilter !== null && $citiesFiltered !== null) {
             return $this->render('front/cities/list.html.twig', [
-                "cities" => $cities, 
-                'countries' => $countries, 
-                'formFilter' => $formFilter->createView()
+                "cities" => $citiesFiltered,
+                'countries' => $countries,
+                'formFilter' => $formFilter->createView(),
             ]);
         }
+
+        $cities = $paginationService->paginate($cities);
 
         return $this->render('front/cities/list.html.twig', [
             'formFilter' => $formFilter->createView(),
