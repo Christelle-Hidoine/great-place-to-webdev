@@ -2,16 +2,14 @@
 
 namespace App\Controller\Front;
 
-use App\Data\FilterData;
-use App\Form\Front\FilterDataType;
 use App\Repository\CityRepository;
+use App\Repository\CountryRepository;
 use App\Repository\ReviewRepository;
+use App\Services\FilterMenuService;
 use App\Services\GoogleApi;
 use App\Services\PaginationService;
 use Exception;
-use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -24,24 +22,25 @@ class CityController extends AbstractController
      */
     public function list(
         CityRepository $cityRepository,
+        CountryRepository $countryRepository,
         PaginationService $paginationService, 
-        Request $request)
+        FilterMenuService $filterMenuService)
     {
-        $cities = $cityRepository->findCountryAndImageByCity('cityName');
+        // country list in filter menu
+        $countries = $countryRepository->findAll();
+        $cities = $cityRepository->findCountryAndImageByCity();
 
-        $criteria = new FilterData();
-        $formFilter = $this->createForm(FilterDataType::class, $criteria);
-        $formFilter->handleRequest($request);
+        // sidebar filter menu
+        $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
-            
-            $citiesFilter = $cityRepository->findByFilter($criteria);
-            $citiesFilter = $paginationService->paginate($citiesFilter);
+        $filteredData = $filterMenuService->getFilteredCities($cities);
+        $citiesFiltered = $filteredData['cities'];
 
+        if ($formFilter !== null && $citiesFiltered !== null) {
             return $this->render('front/cities/list.html.twig', [
-                "citiesFilter" => $citiesFilter, 
-                "cities" => $cities, 
-                "formFilter" => $formFilter->createView(),
+                "cities" => $citiesFiltered,
+                'countries' => $countries,
+                'formFilter' => $formFilter->createView(),
             ]);
         }
 
@@ -49,6 +48,7 @@ class CityController extends AbstractController
 
         return $this->render('front/cities/list.html.twig', [
             'cities' => $cities,
+            'countries' => $countries,
             'formFilter' => $formFilter->createView(),
         ]);
     }

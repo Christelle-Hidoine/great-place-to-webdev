@@ -3,7 +3,6 @@
 namespace App\Services;
 
 use Knp\Component\Pager\PaginatorInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
 
 class PaginationService
