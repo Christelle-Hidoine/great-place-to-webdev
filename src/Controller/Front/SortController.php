@@ -29,16 +29,14 @@ class SortController extends AbstractController
         // sidebar filter menu
         $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
-            
-            $cities = $cityRepository->findByFilter($filterMenuService->getCriteria(), $order);
-            $cities = $paginationService->paginate($cities);
+        $filteredData = $filterMenuService->getFilteredCities($cities);
+        $citiesFiltered = $filteredData['cities'];
 
+        if ($formFilter !== null && $citiesFiltered !== null) {
             return $this->render('front/cities/list.html.twig', [
-                'sortOption' => $order, 
-                "cities" => $cities, 
+                "cities" => $citiesFiltered,
                 'countries' => $countries,
-                'formFilter' => $formFilter->createView()
+                'formFilter' => $formFilter->createView(),
             ]);
         }
 
@@ -69,16 +67,14 @@ class SortController extends AbstractController
         // sidebar filter menu
         $formFilter = $filterMenuService->createFormFilterMenu($filterMenuService->getCriteria());
 
-        if ($formFilter->isSubmitted() && $formFilter->isValid()) {
-            
-            $cities = $cityRepository->findByFilter($filterMenuService->getCriteria(), $order);
-            $cities = $paginationService->paginate($cities);
+        $filteredData = $filterMenuService->getFilteredCities($cities);
+        $citiesFiltered = $filteredData['cities'];
 
+        if ($formFilter !== null && $citiesFiltered !== null) {
             return $this->render('front/cities/list.html.twig', [
-                'sortOption' => $order,
-                "cities" => $cities, 
+                "cities" => $citiesFiltered,
                 'countries' => $countries,
-                'formFilter' => $formFilter->createView()
+                'formFilter' => $formFilter->createView(),
             ]);
         }
 
@@ -87,7 +83,6 @@ class SortController extends AbstractController
         return $this->render('front/cities/list.html.twig', [
             'cities' => $cities,
             'countries' => $countries,
-            'sortOption' => $order,
             'formFilter' => $formFilter->createView()
         ]);
     }
