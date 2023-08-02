@@ -28,9 +28,25 @@ services:
     App\Twig\CustomTwigExtension:
         tags: ['twig.extension']
 
+    # google maps service
     App\Services\GoogleApi:
         arguments:
             $apiKey: '%env(string:GOOGLE_API_KEY)%'
+
+    # pagination 
+    App\Services\PaginationService:
+        arguments:
+            $paginator: '@knp_paginator'
+            $request: '@request_stack'
+    
+    # filter menu
+    App\Services\FilterMenuService:
+        arguments:
+            $formFactory: '@form.factory'
+            $requestStack: '@request_stack'
+            $paginationService: '@App\Services\PaginationService'
+            $cityRepository: '@App\Repository\CityRepository'
+
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones

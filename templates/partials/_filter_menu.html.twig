@@ -29,9 +29,9 @@
                             </button>
                             <div id="dropdown" class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg border-slate-400 shadow w-44"> 
                                 <ul class="py-2 text-base text-black" aria-labelledby="dropdownDefaultButton">
-                                {% for city in cities|sort((a, b) => a.countryName > b.countryName) %}
+                                {% for country in countries|sort((a, b) => a.name > b.name) %}
                                     <li>
-                                        <a href="{{ path('cities_country', {'id': city.countryId})}}" class="block px-4 py-2 hover:bg-gray-100">{{ city.countryName }}</a>
+                                        <a href="{{ path('cities_country', {'id': country.id})}}" class="block px-4 py-2 hover:bg-gray-100">{{ country.name }}</a>
                                     </li>
                                 {% endfor %}
                                 </ul>
