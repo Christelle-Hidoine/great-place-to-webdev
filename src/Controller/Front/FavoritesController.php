@@ -27,7 +27,6 @@ class FavoritesController extends AbstractController
         $user = $this->getUser();
 
         $favoritesList = $user->getCity();
-        dump($favoritesList);
 
         return $this->render('front/favorites/index.html.twig', [
             // "images" => $images,
