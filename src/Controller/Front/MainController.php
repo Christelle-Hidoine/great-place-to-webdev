@@ -130,21 +130,5 @@ class MainController extends AbstractController
         ]);
     }
 
-    /**
-     * create cookie 
-     * 
-     * @Route("/cookie", name="accept_cookie", methods={"GET"})
-     *
-     * @return Response
-     */
-    public function cookies(): Response
-    {
-        $response = new Response();
-        $response->headers->setCookie(new Cookie('accept-cookie', 'chocolate', strtotime('+1 year')));
-        $response->sendHeaders();
-
-        return $this->redirectToRoute('default');
-    }
-
 }
 
